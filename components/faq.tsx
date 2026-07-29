@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Accordion,
   AccordionContent,
@@ -7,96 +8,71 @@ import {
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
 
-export default function Faq() {
-  const accordionItems = [
-    {
-      title: "This template is Free?",
-      content: (
-        <div className="text-muted-foreground">
-          Yes, this template is free. You can use it for personal or commercial
-          purposes.
-        </div>
-      ),
-    },
-    {
-      title: "There are more templates?",
-      content: (
-        <div className="text-muted-foreground">
-          Yes, there are more templates available. You can find them here:{" "}
-          <a
-            href="https://x.com/gonzalochale"
-            target="_blank"
-            rel="noreferrer"
-            className="text-primary underline"
-          >
-            gonzalochale.dev
-          </a>
-        </div>
-      ),
-    },
-    {
-      title: "How can I use this template?",
-      content: (
-        <div className="text-muted-foreground">
-          You can use this template by cloning it from{" "}
-          <a
-            href="https://github.com/gonzalochale/nextui-saas-landing-template"
-            className="text-primary underline"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-          .
-        </div>
-      ),
-    },
-    {
-      title: "How can I contribute to this template?",
-      content: (
-        <div className="text-muted-foreground">
-          You can contribute to this template by forking it on GitHub and
-          submitting a pull request. You can also report any issues or bugs you
-          encounter while using the template.
-        </div>
-      ),
-    },
-  ];
+const accordionItems = [
+  {
+    title: "PackCam phù hợp với mô hình doanh nghiệp nào?",
+    content:
+      "PackCam phù hợp với shop online, kho vận, fulfillment, doanh nghiệp bán hàng đa kênh và các đội cần ghi lại quá trình đóng gói để xử lý khiếu nại minh bạch.",
+  },
+  {
+    title: "Có thể tra cứu video theo đơn hàng không?",
+    content:
+      "Có. PackCam được định hướng để giúp đội vận hành tìm lại video theo đơn hàng, thời gian và camera, nhờ đó rút ngắn thời gian xác minh khi khách phản hồi thiếu hàng hoặc sai hàng.",
+  },
+  {
+    title: "Dữ liệu video được dùng để làm gì?",
+    content:
+      "Video là bằng chứng đối soát giữa kho, chăm sóc khách hàng, đơn vị vận chuyển và khách hàng. Doanh nghiệp có thể dùng dữ liệu này để giảm tranh chấp và cải thiện quy trình đóng gói.",
+  },
+  {
+    title: "Tôi có thể tải bản cài Windows ở đâu?",
+    content:
+      "Bạn có thể tải trực tiếp bằng các nút Tải Windows trên trang. Route tải xuống đang trỏ tới bản cài PackCam_0.4.0_x64-setup.exe trong thư mục release hiện tại.",
+  },
+];
 
+export default function Faq() {
   return (
     <motion.section
-      initial={{ y: 20, opacity: 0 }}
-      whileInView={{
-        y: 0,
-        opacity: 1,
-      }}
+      id="faq"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.5, type: "spring", bounce: 0 }}
-      className="relative w-full max-w-(--breakpoint-xl) mx-auto px-4 py-28 gap-5 md:px-8 flex flex-col justify-center items-center"
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="px-4 py-16 lg:px-8 lg:py-20"
     >
-      <div className="flex flex-col gap-3 justify-center items-center">
-        <h4 className="text-2xl font-bold sm:text-3xl bg-linear-to-b from-foreground to-muted-foreground text-transparent bg-clip-text">
-          FAQ
-        </h4>
-        <p className="max-w-xl text-muted-foreground text-center">
-          Here are some of our frequently asked questions.
-        </p>
-      </div>
-      <div className="flex w-full max-w-lg">
-        <Accordion type="multiple" className="w-full">
-          {accordionItems.map((item, index) => (
-            <AccordionItem
-              key={index}
-              value={`item-${index}`}
-              className="text-muted-foreground"
-            >
-              <AccordionTrigger className="text-left">
-                {item.title}
-              </AccordionTrigger>
-              <AccordionContent>{item.content}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-2xl">
+          <span className="inline-flex rounded-lg border border-primary/15 bg-primary/7 px-4 py-2 text-sm font-semibold text-primary">
+            Câu hỏi thường gặp
+          </span>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl">
+            Những điều doanh nghiệp thường hỏi trước khi triển khai PackCam
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-muted-foreground">
+            Các câu trả lời tập trung vào giá trị vận hành, khả năng tra cứu và cách
+            PackCam hỗ trợ đội chăm sóc khách hàng trong xử lý khiếu nại.
+          </p>
+        </div>
+
+        <div className="w-full max-w-3xl rounded-lg border border-border bg-white p-3 shadow-sm sm:p-5">
+          <Accordion type="single" collapsible className="w-full">
+            {accordionItems.map((item, index) => (
+              <AccordionItem
+                key={item.title}
+                value={`item-${index}`}
+                className="border-b border-border px-3"
+              >
+                <AccordionTrigger className="text-left text-base font-semibold text-foreground">
+                  {item.title}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-7 text-muted-foreground">
+                  {item.content}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </motion.section>
   );

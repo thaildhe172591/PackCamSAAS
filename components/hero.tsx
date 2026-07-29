@@ -1,91 +1,110 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
+
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { motion } from "framer-motion";
+import { ArrowRight, Clock3, Download, Search, ShieldCheck } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+
+const highlights = [
+  {
+    title: "Quay tự động",
+    description:
+      "Ghi hình quy trình đóng gói liên tục, giảm tranh chấp sau giao hàng.",
+    icon: Clock3,
+  },
+  {
+    title: "Lưu trữ an toàn",
+    description:
+      "Video được quản lý tập trung, dễ phân quyền và truy xuất khi cần.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Tra cứu nhanh",
+    description:
+      "Tìm theo đơn hàng, thời gian, camera để xử lý khiếu nại chính xác.",
+    icon: Search,
+  },
+];
 
 export default function Hero() {
   return (
-    <div className="relative justify-center items-center">
-      <section className="max-w-(--breakpoint-xl) mx-auto px-4 py-28 gap-12 md:px-8 flex flex-col justify-center items-center">
+    <section className="relative overflow-hidden">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:px-8 lg:py-16">
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{
-            y: 0,
-            opacity: 1,
-          }}
-          transition={{ duration: 0.6, type: "spring", bounce: 0 }}
-          className="flex flex-col justify-center items-center space-y-5 max-w-4xl mx-auto text-center"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="relative z-10 flex flex-col justify-center"
         >
-          <span className="w-fit h-full text-sm bg-card px-2 py-1 border border-border rounded-full">
-            New template!
+          <span className="mb-5 inline-flex w-fit items-center rounded-lg border border-primary/20 bg-white/75 px-4 py-2 text-sm font-semibold text-primary shadow-sm">
+            Phần mềm quản lý quay đóng gói và khiếu nại
           </span>
-          <h1 className="text-4xl font-medium tracking-tighter mx-auto md:text-6xl text-pretty bg-linear-to-b from-sky-800 dark:from-sky-100 to-foreground dark:to-foreground bg-clip-text text-transparent">
-            Beautiful Landing Page Template for SaaS Startups
+
+          <h1 className="max-w-3xl text-4xl font-extrabold text-balance text-foreground sm:text-5xl lg:text-6xl">
+            PackCam
           </h1>
-          <p className="max-w-2xl text-lg mx-auto text-muted-foreground text-balance">
-            Create your next landing page using this free template.
+
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
+            Giải pháp giúp doanh nghiệp ghi lại toàn bộ quá trình đóng gói, lưu
+            trữ bằng chứng an toàn và tra cứu video nhanh khi phát sinh khiếu nại,
+            thất lạc hoặc cần đối soát vận hành.
           </p>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0"
-          >
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="shadow-lg">See more</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Gonzalo Chalé</DialogTitle>
-                  <DialogDescription>
-                    I&apos;m Software Engineer from Cancún, México, always
-                    building things for the web.
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <Button asChild size="sm">
-                    <Link href="https://x.com/gonzalochale" target="_blank">
-                      Connect on{" "}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        fill="none"
-                        viewBox="0 0 1200 1227"
-                        className="ml-1"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"
-                        />
-                      </svg>
-                    </Link>
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </motion.div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="rounded-lg px-6 shadow-sm">
+              <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+                Tải bản cài Windows
+                <Download className="size-4" />
+              </a>
+            </Button>
+
+            <Button asChild variant="outline" size="lg" className="rounded-lg px-6">
+              <Link href="#pricing">
+                Xem gói triển khai
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {highlights.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.12 + index * 0.08 }}
+                className="rounded-lg border border-border bg-white/72 p-5 shadow-sm"
+              >
+                <div className="mb-4 flex size-11 items-center justify-center rounded-lg bg-primary/12 text-primary">
+                  <item.icon className="size-5" />
+                </div>
+                <h2 className="text-base font-bold text-foreground">{item.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
-      </section>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2, delay: 0.5, type: "spring", bounce: 0 }}
-        className="w-full h-full absolute -top-32 flex justify-end items-center pointer-events-none "
-      >
-        <div className="w-3/4 flex justify-center items-center">
-          <div className="w-12 h-150 bg-light blur-[70px] rounded-3xl max-sm:rotate-15 sm:rotate-35 will-change-transform"></div>
-        </div>
-      </motion.div>
-    </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.08, ease: "easeOut" }}
+          className="relative flex min-h-[320px] items-center justify-center overflow-visible lg:min-h-[520px]"
+        >
+          <Image
+            src="/packcam/packcam-hero-illustration-1.png"
+            alt="Camera PackCam ghi hình kiện hàng trong quy trình đóng gói"
+            width={1536}
+            height={1024}
+            priority
+            className="h-auto w-full max-w-[720px] object-contain drop-shadow-[0_26px_44px_rgba(255,106,0,0.2)]"
+            sizes="(max-width: 1024px) 100vw, 58vw"
+          />
+        </motion.div>
+      </div>
+    </section>
   );
 }
