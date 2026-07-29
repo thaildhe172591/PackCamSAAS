@@ -1,242 +1,130 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import ThemeSwitcher from "@/components/theme-switcher";
-import {
-  ChevronDownIcon,
-  FaceIcon,
-  GlobeIcon,
-  OpenInNewWindowIcon,
-  PersonIcon,
-  TimerIcon,
-  HamburgerMenuIcon,
-  Cross1Icon,
-} from "@radix-ui/react-icons";
+import { AnimatePresence, motion } from "framer-motion";
+import { Download, Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
+const menuItems = [
+  { name: "Tính năng", href: "#features" },
+  { name: "Minh bạch", href: "#banners" },
+  { name: "Khiếu nại", href: "#posters" },
+  { name: "Bảng giá", href: "#pricing" },
+  { name: "FAQ", href: "#faq" },
+];
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 12);
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuItems = [
-    { name: "Pricing", href: "#pricing" },
-    { name: "Testimonials", href: "#testimonials" },
-  ];
-
-  const showNavbarBlur = isScrolled || isMenuOpen;
+  const isCompact = isScrolled || isMenuOpen;
 
   return (
     <nav
-      className={`sticky top-0 z-50 w-full transition-[background-color,backdrop-filter] duration-300 ease-out ${
-        showNavbarBlur
-          ? "backdrop-blur supports-backdrop-filter:bg-background/60"
-          : "backdrop-blur-0 supports-backdrop-filter:bg-background/0"
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        isCompact
+          ? "border-border/80 bg-background/92 backdrop-blur-xl"
+          : "border-transparent bg-background/70 backdrop-blur-md"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex sm:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative"
-            >
-              <motion.div
-                animate={{ rotate: isMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              >
-                {isMenuOpen ? <Cross1Icon /> : <HamburgerMenuIcon />}
-              </motion.div>
-            </Button>
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 lg:px-8">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="relative size-11 overflow-hidden rounded-lg border border-white bg-white shadow-sm">
+            <Image
+              src="/packcam/packcam-app-icon-1.png"
+              alt="Biểu tượng PackCam"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
-          <div className="flex sm:hidden">
-            <Link href="/" className="font-light tracking-tighter text-lg">
-              Acme
-            </Link>
+          <div className="flex flex-col">
+            <span className="text-lg font-extrabold text-foreground">PackCam</span>
+            <span className="text-xs text-muted-foreground">
+              Quay đóng gói và khiếu nại
+            </span>
           </div>
-          <div className="hidden sm:flex items-center space-x-8">
-            <Link href="/" className="font-light tracking-tighter text-2xl">
-              Acme
-            </Link>
+        </Link>
 
-            <Button asChild variant="ghost" size="sm">
-              <Link href="#pricing">Pricing</Link>
+        <div className="hidden items-center gap-1 md:flex">
+          {menuItems.map((item) => (
+            <Button key={item.name} asChild variant="ghost" size="sm">
+              <Link href={item.href}>{item.name}</Link>
             </Button>
-
-            <Button asChild variant="ghost" size="sm">
-              <Link href="#testimonials">Testimonials</Link>
-            </Button>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  Dropdown
-                  <ChevronDownIcon className="ml-1 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-80">
-                <DropdownMenuItem>
-                  <OpenInNewWindowIcon className="mr-2 h-4 w-4" />
-                  <div>
-                    <div className="font-semibold">Autoscaling</div>
-                    <div className="text-sm text-muted-foreground">
-                      ACME scales apps to meet user demand, automagically, based
-                      on load.
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <PersonIcon className="mr-2 h-4 w-4" />
-                  <div>
-                    <div className="font-semibold">Usage Metrics</div>
-                    <div className="text-sm text-muted-foreground">
-                      Real-time metrics to debug issues. Slow query added?
-                      We&apos;ll show you exactly where.
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <GlobeIcon className="mr-2 h-4 w-4" />
-                  <div>
-                    <div className="font-semibold">Production Ready</div>
-                    <div className="text-sm text-muted-foreground">
-                      ACME runs on ACME, join us and others serving requests at
-                      web scale.
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <TimerIcon className="mr-2 h-4 w-4" />
-                  <div>
-                    <div className="font-semibold">+99% Uptime</div>
-                    <div className="text-sm text-muted-foreground">
-                      Applications stay on the grid with high availability and
-                      high uptime guarantees.
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <FaceIcon className="mr-2 h-4 w-4" />
-                  <div>
-                    <div className="font-semibold">+Supreme Support</div>
-                    <div className="text-sm text-muted-foreground">
-                      Overcome any challenge with a supporting team ready to
-                      respond.
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button asChild className="hidden sm:flex" size="sm">
-              <Link href="https://x.com/gonzalochale" target="_blank">
-                Connect on{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  fill="none"
-                  viewBox="0 0 1200 1227"
-                  className="ml-1 size-4"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"
-                  />
-                </svg>
-              </Link>
-            </Button>
-            <ThemeSwitcher />
-          </div>
+          ))}
         </div>
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="sm:hidden overflow-hidden"
-            >
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                exit={{ y: -20 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="px-2 pt-2 pb-3 space-y-1"
-              >
-                {menuItems.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className="block px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors duration-200"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                ))}
+
+        <div className="hidden md:block">
+          <Button asChild size="lg" className="rounded-lg px-5 shadow-sm">
+            <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+              Tải Windows
+              <Download className="size-4" />
+            </a>
+          </Button>
+        </div>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setIsMenuOpen((open) => !open)}
+          aria-label={isMenuOpen ? "Đóng menu" : "Mở menu"}
+        >
+          {isMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </Button>
+      </div>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
+            className="overflow-hidden border-t border-border/70 bg-background md:hidden"
+          >
+            <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4">
+              {menuItems.map((item, index) => (
                 <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.4 }}
-                  className=""
+                  key={item.name}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.04 }}
                 >
                   <Link
-                    href="https://x.com/gonzalochale"
-                    target="_blank"
-                    className="flex items-center gap-1 whitespace-nowrap px-3 py-2 text-base font-medium text-foreground hover:bg-muted rounded-md transition-colors duration-200"
+                    href={item.href}
+                    className="block rounded-lg px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <span>Connect on</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="none"
-                      viewBox="0 0 1200 1227"
-                      className="size-3"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"
-                      />
-                    </svg>
+                    {item.name}
                   </Link>
                 </motion.div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+              ))}
+
+              <Button asChild size="lg" className="mt-2 rounded-lg">
+                <a
+                  href="/downloads/PackCam_0.4.0_x64-setup.exe"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Tải bản cài Windows
+                  <Download className="size-4" />
+                </a>
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

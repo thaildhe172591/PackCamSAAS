@@ -2,15 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
-import { Geist } from "next/font/google";
-
-const geist = Geist({
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
-  title: "SaaS Landing Template",
-  description: "Landing Page template.",
+  metadataBase: new URL("http://localhost:3000"),
+  title: "PackCam | Quay tự động, lưu trữ an toàn",
+  description:
+    "Landing page chính thức của PackCam với bộ banner, poster và link tải Windows installer.",
 };
 
 export default function RootLayout({
@@ -19,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.className} antialiased`}>
+    <html lang="vi" suppressHydrationWarning>
+      <body className="antialiased">
         <Providers>
           <NavBar />
           {children}

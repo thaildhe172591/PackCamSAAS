@@ -1,104 +1,92 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { Download } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+const footerLinks = [
+  { name: "Tính năng", href: "#features" },
+  { name: "Banner", href: "#banners" },
+  { name: "Poster", href: "#posters" },
+  { name: "Bảng giá", href: "#pricing" },
+  { name: "FAQ", href: "#faq" },
+];
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
-  const socialLinks = [
-    {
-      name: "Twitter",
-      href: "https://x.com/gonzalochale",
-      icon: TwitterLogoIcon,
-    },
-    {
-      name: "GitHub",
-      href: "https://github.com/gonzalochale",
-      icon: GitHubLogoIcon,
-    },
-  ];
-
-  const footerLinks = [
-    { name: "Pricing", href: "#pricing" },
-    { name: "Testimonials", href: "#testimonials" },
-    { name: "Get Started", href: "#" },
-  ];
-
   return (
-    <footer className="w-full border-t bg-card/50">
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:py-12">
+    <footer className="border-t border-border bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-10 lg:px-8 lg:py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="space-y-8"
+          transition={{ duration: 0.45 }}
+          className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr_0.8fr]"
         >
-          <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
-            <div className="space-y-3">
-              <Link
-                href="/"
-                className="inline-block text-xl font-medium tracking-tight transition-opacity hover:opacity-80"
-              >
-                Acme
-              </Link>
-              <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-                Build and scale your product faster with a platform designed for
-                modern teams.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold">Quick Links</h3>
-              <div className="flex flex-col gap-2">
-                {footerLinks.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+          <div className="space-y-4">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="relative size-12 overflow-hidden rounded-lg border border-border bg-white shadow-sm">
+                <Image
+                  src="/packcam/packcam-app-icon-1.png"
+                  alt="Biểu tượng PackCam"
+                  fill
+                  className="object-cover"
+                />
               </div>
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold">Social</h3>
-              <div className="flex gap-2">
-                {socialLinks.map((social) => (
-                  <Button
-                    key={social.name}
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 rounded-full"
-                  >
-                    <Link
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.name}
-                    >
-                      <social.icon className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                ))}
+              <div>
+                <p className="text-xl font-extrabold text-foreground">PackCam</p>
+                <p className="text-sm text-muted-foreground">
+                  Quản lý quay đóng gói và khiếu nại chuyên nghiệp
+                </p>
               </div>
+            </Link>
+
+            <p className="max-w-md text-sm leading-7 text-muted-foreground">
+              PackCam giúp doanh nghiệp lưu lại bằng chứng đóng gói, bảo vệ uy tín
+              dịch vụ và xử lý khiếu nại dựa trên dữ liệu rõ ràng.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold uppercase text-primary">
+              Điều hướng nhanh
+            </h3>
+            <div className="flex flex-col gap-2">
+              {footerLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </div>
 
-          <Separator />
-
-          <div className="flex flex-col items-center justify-between gap-2 text-center text-sm text-muted-foreground sm:flex-row sm:text-left">
-            <span>© {year} Acme. All rights reserved.</span>
-            <span className="font-medium">#BuildingInPublic</span>
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold uppercase text-primary">
+              Tải ứng dụng
+            </h3>
+            <p className="text-sm leading-7 text-muted-foreground">
+              Tải trực tiếp bản cài PackCam cho Windows 64-bit.
+            </p>
+            <Button asChild className="rounded-lg shadow-sm">
+              <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+                Tải PackCam
+                <Download className="size-4" />
+              </a>
+            </Button>
           </div>
         </motion.div>
+
+        <div className="mt-8 border-t border-border pt-5 text-sm text-muted-foreground">
+          © {year} PackCam. All rights reserved.
+        </div>
       </div>
     </footer>
   );
