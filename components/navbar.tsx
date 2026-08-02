@@ -13,6 +13,7 @@ const menuItems = [
   { name: "Khiếu nại", href: "#posters" },
   { name: "Bảng giá", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
+  { name: "Liên hệ", href: "#contact" },
 ];
 
 export default function NavBar() {
