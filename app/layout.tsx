@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
@@ -17,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className="antialiased">
+      <body className={`${beVietnamPro.className} antialiased`}>
         <Providers>
           <NavBar />
           {children}

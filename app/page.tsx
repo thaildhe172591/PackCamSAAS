@@ -5,6 +5,7 @@ import Testimonials from "@/components/testimonials";
 import Pricing from "@/components/pricing";
 import Faq from "@/components/faq";
 import Footer from "@/components/footer";
+import ContactWidget from "@/components/contact-widget";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Pricing />
       <Faq />
       <Footer />
+      <ContactWidget />
     </main>
   );
 }
