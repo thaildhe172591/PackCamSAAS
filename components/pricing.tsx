@@ -22,7 +22,7 @@ const plans = [
   {
     name: "Dùng thử",
     price: "Miễn phí",
-    priceSuffix: "45 ngày",
+    priceSuffix: "7 ngày",
     desc: "Chạy thử toàn bộ trên dữ liệu thật của shop.",
     isMostPop: false,
     cta: "Tải về & nhận key thử",
@@ -30,11 +30,11 @@ const plans = [
     opensContactOnClick: true,
     href: "/downloads/PackCam_0.4.0_x64-setup.exe",
     features: [
-      "6 bàn đóng gói",
+      "2 bàn đóng gói",
       "Mở đủ tính năng như gói Pro",
       "Không giới hạn số video",
       "Dữ liệu giữ nguyên khi chuyển sang gói trả phí",
-      "Cần key do nhà cung cấp phát",
+      "Cần key do nhà cung cấp phát, phần mềm không tự mở dùng thử",
     ],
   },
   {
