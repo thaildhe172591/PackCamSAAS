@@ -8,108 +8,104 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Download, MessageCircle, Sparkles, Star } from "lucide-react";
 
+/**
+ * Bảng gói phải khớp hai nguồn sự thật, không được tự chế:
+ *
+ * 1. `PLAN_CATALOG` trong repo `packcam-license-manager` — số bàn, thời hạn, giá. Đó là thứ
+ *    tool cấp key thực sự phát ra, nên trang bán hàng hứa khác đi là hứa thứ không giao được.
+ * 2. Tính năng **đã chạy thật** trong PackCam, không phải danh mục feature id. Danh mục có 17
+ *    cờ nhưng phần lớn mới là chỗ dành sẵn; chỉ liệt kê ở đây thứ khách bật lên là dùng được.
+ *
+ * Mọi thứ đang phát triển đều phải ghi rõ là lộ trình, không trộn vào danh sách tính năng.
+ */
 const plans = [
   {
-    name: "Starter",
-    price: "0đ",
-    priceSuffix: "/tháng",
-    desc: "Dành cho shop mới bắt đầu.",
+    name: "Dùng thử",
+    price: "Miễn phí",
+    priceSuffix: "45 ngày",
+    desc: "Chạy thử toàn bộ trên dữ liệu thật của shop.",
     isMostPop: false,
-    cta: "Bắt đầu miễn phí",
+    cta: "Tải về & nhận key thử",
     ctaIcon: "download",
+    opensContactOnClick: true,
     href: "/downloads/PackCam_0.4.0_x64-setup.exe",
     features: [
-      "1 bàn đóng gói",
-      "Ghi hình theo ca",
-      "Lưu trữ video 7 ngày",
-      "Tra cứu theo thời gian",
-      "1 tài khoản quản trị",
-      "Dùng thử đầy đủ tính năng trong 14 ngày đầu",
+      "6 bàn đóng gói",
+      "Mở đủ tính năng như gói Pro",
+      "Không giới hạn số video",
+      "Dữ liệu giữ nguyên khi chuyển sang gói trả phí",
+      "Cần key do nhà cung cấp phát",
     ],
   },
   {
     name: "Standard",
-    price: "399.000đ",
-    priceSuffix: "/tháng",
-    desc: "Dành cho shop đang phát triển.",
+    price: "4.900.000đ",
+    priceSuffix: "trọn đời",
+    desc: "Mua một lần, dùng vĩnh viễn trên 1 máy.",
     isMostPop: false,
     cta: "Tải về & tư vấn",
     ctaIcon: "download",
     opensContactOnClick: true,
     href: "/downloads/PackCam_0.4.0_x64-setup.exe",
     features: [
-      "1 bàn đóng gói",
-      "Lưu trữ 30 ngày",
-      "Tra cứu theo mã đơn",
-      "Xuất video nhanh",
-      "3 tài khoản sử dụng",
-      "Hỗ trợ cài đặt từ xa",
-      "Đủ tính năng gói Starter",
+      "2 bàn đóng gói",
+      "Quay bằng chứng, khắc mã vận đơn lên khung hình",
+      "Tra cứu video theo mã, nhân viên, bàn, ngày",
+      "Nhập đơn từ file Excel/CSV của sàn",
+      "Bảng tổng quan sản lượng",
+      "Quản lý nhân viên và phân quyền",
+      "Không phí duy trì, không cần internet",
     ],
   },
   {
     name: "Pro",
-    price: "699.000đ",
-    priceSuffix: "/tháng",
-    desc: "Gói khuyến nghị cho shop vừa.",
+    price: "12.900.000đ",
+    priceSuffix: "/năm",
+    desc: "Cho kho nhiều bàn, cần giám sát và đối soát.",
     isMostPop: true,
     cta: "Tải về & tư vấn",
     ctaIcon: "download",
     opensContactOnClick: true,
     href: "/downloads/PackCam_0.4.0_x64-setup.exe",
     features: [
-      "3 bàn đóng gói",
-      "Dashboard thống kê",
-      "Tra cứu theo QR / Barcode",
-      "Phân quyền nhân viên",
-      "Backup tự động",
+      "8 bàn đóng gói",
+      "Camera IP / đầu ghi NVR, không chỉ webcam USB",
+      "Màn quản lý đơn: mỗi đơn quay mấy lần, thời lượng trung bình",
+      "Theo dõi trực tiếp: bàn nào đang quay đơn nào, kèm hình",
+      "Gợi ý đơn ngay khi gõ mã vận đơn",
+      "Cảnh báo đơn bị quay trùng",
       "Hỗ trợ ưu tiên",
       "Đủ tính năng gói Standard",
-    ],
-  },
-  {
-    name: "Business",
-    price: "1.490.000đ",
-    priceSuffix: "/tháng",
-    desc: "Dành cho kho vận hành lớn.",
-    isMostPop: false,
-    cta: "Tư vấn gói Business",
-    ctaIcon: "contact",
-    href: "#contact",
-    features: [
-      "5 bàn đóng gói",
-      "Quản lý nhiều kho",
-      "Báo cáo thống kê",
-      "API tích hợp Shopee",
-      "Đồng bộ NAS/Server",
-      "Hỗ trợ triển khai từ xa",
-      "Đủ tính năng gói Pro",
     ],
   },
   {
     name: "Enterprise",
     price: "Liên hệ",
     priceSuffix: "",
-    desc: "Cho chuỗi kho cần triển khai riêng.",
+    desc: "Cho chuỗi nhiều kho cần triển khai riêng.",
     isMostPop: false,
     cta: "Liên hệ triển khai riêng",
     ctaIcon: "contact",
     href: "#contact",
     features: [
-      "Không giới hạn bàn",
-      "Không giới hạn người dùng",
-      "Cloud hoặc On-premise",
-      "API tùy chỉnh ERP/WMS",
-      "SLA cam kết",
-      "Hỗ trợ riêng & đào tạo",
-      "Đủ tính năng gói Business",
+      "Không giới hạn số bàn đóng gói",
+      "Cài đặt và cấu hình tại chỗ",
+      "Đào tạo nhân sự vận hành",
+      "SLA hỗ trợ theo thoả thuận",
+      "Đủ tính năng gói Pro",
+    ],
+    roadmap: [
+      "Đồng bộ nhiều chi nhánh",
+      "Xem video từ xa",
+      "Link chia sẻ bằng chứng cho sàn",
+      "Kết nối API sàn",
     ],
   },
 ];
 
 const conversionCues = [
-  "Gói Pro phù hợp nhất cho shop đang tăng đơn",
-  "Tải về xong inbox để được tư vấn cấu hình bàn đóng gói",
+  "Standard mua một lần, dùng vĩnh viễn — không phí duy trì hằng tháng",
+  "Dùng thử 45 ngày mở đủ tính năng, trên dữ liệu thật của shop",
   "Hỗ trợ qua Fanpage, Zalo, Telegram và điện thoại",
 ];
 
@@ -152,7 +148,7 @@ export default function Pricing() {
           </div>
         </motion.div>
 
-        <div className="mx-auto grid w-full items-start gap-4 md:grid-cols-2 xl:grid-cols-[0.92fr_0.98fr_1.18fr_1fr_1fr] xl:gap-4">
+        <div className="mx-auto grid w-full items-start gap-4 md:grid-cols-2 xl:grid-cols-[0.95fr_1fr_1.2fr_1fr] xl:gap-4">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -244,6 +240,23 @@ export default function Pricing() {
                       </li>
                     ))}
                   </ul>
+
+                  {/* Lộ trình tách hẳn khỏi danh sách tính năng và ghi rõ là chưa có. Trộn thứ
+                      chưa xây vào danh sách tính năng là bán thứ không giao được. */}
+                  {plan.roadmap && (
+                    <div className="mt-4 rounded-lg border border-zinc-800 bg-black/35 p-3">
+                      <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+                        Đang phát triển
+                      </p>
+                      <ul className="grid gap-y-1.5">
+                        {plan.roadmap.map((item) => (
+                          <li key={item} className="text-xs leading-4 text-zinc-500">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </CardContent>
 
                 <CardFooter
