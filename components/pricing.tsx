@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Download, MessageCircle, Send, Sparkles, Star } from "lucide-react";
 import { PLAN_CODE, telegramBuyLink } from "@/lib/telegram";
+import { DOWNLOAD_URL as INSTALLER } from "@/lib/download";
 
-const INSTALLER = "/downloads/PackCam_0.4.0_x64-setup.exe";
 
 /**
  * Mỗi gói có một nút chính và (tuỳ chọn) một link phụ. Trước đây ba cờ rời rạc — `ctaIcon`,

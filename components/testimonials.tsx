@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DOWNLOAD_URL } from "@/lib/download";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -194,7 +195,7 @@ export default function Testimonials() {
               mở phần mềm và tài liệu bán hàng vẫn giữ cùng cảm giác chuyên nghiệp.
             </p>
             <Button asChild size="lg" className="rounded-lg px-6 shadow-sm">
-              <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+              <a href={DOWNLOAD_URL}>
                 Tải PackCam cho Windows
                 <ArrowRight className="size-4" />
               </a>

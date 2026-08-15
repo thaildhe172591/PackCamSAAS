@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DOWNLOAD_URL } from "@/lib/download";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock3, Download, Search, ShieldCheck } from "lucide-react";
 import Image from "next/image";
@@ -53,7 +54,7 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg" className="rounded-lg px-6 shadow-sm">
-              <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+              <a href={DOWNLOAD_URL}>
                 Tải bản cài Windows
                 <Download className="size-4" />
               </a>

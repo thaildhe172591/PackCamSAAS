@@ -27,7 +27,7 @@ const accordionItems = [
   {
     title: "Tôi có thể tải bản cài Windows ở đâu?",
     content:
-      "Bạn có thể tải trực tiếp bằng các nút Tải Windows trên trang. Route tải xuống đang trỏ tới bản cài PackCam_0.4.0_x64-setup.exe trong thư mục release hiện tại.",
+      "Bạn có thể tải trực tiếp bằng các nút Tải Windows trên trang. Nút tải luôn lấy bản phát hành mới nhất, nên không cần theo dõi số phiên bản.",
   },
 ];
 

@@ -1,43 +1,15 @@
-import { createReadStream, existsSync } from "node:fs";
-import { stat } from "node:fs/promises";
-import path from "node:path";
-import { Readable } from "node:stream";
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
-const bundledInstallerPath = path.join(
-  process.cwd(),
-  "public",
-  "downloads",
-  "PackCam_0.4.0_x64-setup.exe",
-);
+import { DOWNLOAD_URL } from "@/lib/download";
 
-const localInstallerPath =
-  "D:\\DevProjects\\PackCam\\src-tauri\\target\\release\\bundle\\nsis\\PackCam_0.4.0_x64-setup.exe";
-
-export async function GET() {
-  const installerPath = existsSync(bundledInstallerPath)
-    ? bundledInstallerPath
-    : localInstallerPath;
-
-  if (!existsSync(installerPath)) {
-    return new NextResponse("Windows installer not found.", {
-      status: 404,
-    });
-  }
-
-  const fileName = path.basename(installerPath);
-  const fileStat = await stat(installerPath);
-  const stream = createReadStream(installerPath);
-
-  return new NextResponse(
-    Readable.toWeb(stream) as unknown as ReadableStream,
-    {
-      headers: {
-        "Content-Disposition": `attachment; filename="${fileName}"`,
-        "Content-Length": fileStat.size.toString(),
-        "Content-Type": "application/octet-stream",
-        "Cache-Control": "no-store",
-      },
-    },
-  );
+/**
+ * Không nút nào trên trang trỏ vào đây nữa, nhưng đường dẫn này đã từng được phát ra ngoài nên
+ * giữ lại và chuyển hướng, thay vì xoá đi để nó thành 404 với người đang giữ link cũ.
+ *
+ * Bản cũ đọc file `.exe` commit trong repo, và nếu không thấy thì đọc tiếp một đường dẫn tuyệt
+ * đối trên ổ D của máy lập trình viên — trên Vercel đường đó không bao giờ tồn tại, nên nhánh
+ * fallback chỉ có thể dẫn tới 404.
+ */
+export function GET() {
+  redirect(DOWNLOAD_URL);
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DOWNLOAD_URL } from "@/lib/download";
 import { motion } from "framer-motion";
 import {
   Download,
@@ -149,7 +150,7 @@ const Footer = () => {
               Tải trực tiếp bản cài PackCam cho Windows 64-bit.
             </p>
             <Button asChild className="rounded-lg shadow-sm">
-              <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+              <a href={DOWNLOAD_URL}>
                 Tải PackCam
                 <Download className="size-4" />
               </a>
