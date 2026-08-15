@@ -17,4 +17,4 @@ export const DOWNLOAD_URL =
  *
  * Lệch với bản thật thì chỉ sai con số hiển thị; nút tải vẫn phát đúng bản mới nhất.
  */
-export const LATEST_VERSION = "0.5.1";
+export const LATEST_VERSION = "0.5.2";
