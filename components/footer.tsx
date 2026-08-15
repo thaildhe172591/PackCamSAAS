@@ -10,6 +10,7 @@ import {
   Send,
   type LucideIcon,
 } from "lucide-react";
+import { telegramBuyLink } from "@/lib/telegram";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -42,8 +43,8 @@ const contactLinks: {
   },
   {
     name: "Telegram",
-    value: "PackCam Corp / @packcam1243",
-    href: "https://t.me/packcam1243",
+    value: "@packcambot — báo giá & phát key 24/7",
+    href: telegramBuyLink(),
     icon: Send,
   },
 ];
