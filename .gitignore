@@ -16,6 +16,12 @@
 # production
 /build
 
+# Bản cài .exe: KHÔNG commit vào repo. Trước đây mỗi lần cập nhật cộng ~67MB vĩnh viễn vào
+# lịch sử git (5 lần thành 352MB, phải viết lại lịch sử mới gỡ ra được). Bản cài phát hành
+# qua GitHub Releases, xem lib/download.ts.
+/public/downloads/
+*.exe
+
 # misc
 .DS_Store
 *.pem
