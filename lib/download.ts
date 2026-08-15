@@ -1,14 +1,20 @@
 /**
- * Bản cài Windows nằm ở GitHub Releases, không nằm trong repo.
+ * Nguồn duy nhất cho nút tải bản cài Windows.
  *
- * Trước đây file .exe được commit thẳng vào `public/downloads/`. Mỗi lần cập nhật cộng thêm
- * ~67MB VĨNH VIỄN vào lịch sử git (đã 5 lần, .git phình lên 352MB) — mà thư mục chỉ hiện
- * một bản, nên không ai thấy repo đang nặng dần. Tệ hơn: hai bản dựng khác nhau cùng tên
- * `PackCam_0.4.0_x64-setup.exe`, nên bản cũ nằm im hai tuần mà nhìn không ra.
+ * Trước đây file `.exe` 70 MB được commit thẳng vào `public/downloads/` và số phiên bản nằm rải
+ * rác ở sáu component. Mỗi bản mới là một lần copy tay, sáu lần sửa chuỗi, và 70 MB cộng vĩnh
+ * viễn vào lịch sử git — quên một chỗ là nút đó lặng lẽ phát bản cũ.
  *
- * Đường dẫn dưới đây cố ý KHÔNG mang số phiên bản, và trỏ vào `latest` chứ không vào một tag
- * cụ thể. Nhờ vậy phát hành bản mới chỉ cần tạo release mới với asset trùng tên — web không
- * phải sửa, không phải deploy lại. Số phiên bản nằm ở tag của release, chỗ nó nhìn thấy được.
+ * `releases/latest/download/...` luôn trả bản mới nhất, nên nút tải đúng kể cả khi trang chưa
+ * kịp deploy lại. Tên file không kèm số phiên bản chính là để đường dẫn này đứng yên.
  */
-export const INSTALLER_URL =
+export const DOWNLOAD_URL =
   "https://github.com/thaildhe172591/PackCamSAAS/releases/latest/download/PackCam-x64-setup.exe";
+
+/**
+ * Chỉ để hiển thị. Workflow phát hành của repo PackCam tự sửa dòng này sau mỗi bản rồi push, và
+ * chính cú push đó là thứ kích hoạt Vercel deploy lại trang.
+ *
+ * Lệch với bản thật thì chỉ sai con số hiển thị; nút tải vẫn phát đúng bản mới nhất.
+ */
+export const LATEST_VERSION = "0.5.1";

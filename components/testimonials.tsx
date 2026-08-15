@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { INSTALLER_URL } from "@/lib/download";
+import { DOWNLOAD_URL } from "@/lib/download";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
@@ -168,7 +168,7 @@ export default function Testimonials() {
                 size="sm"
                 className="packcam-cta-shimmer shrink-0 rounded-lg px-4 shadow-sm"
               >
-                <a href={INSTALLER_URL}>
+                <a href={DOWNLOAD_URL}>
                   Tải về dùng thử
                   <ArrowRight className="size-4" />
                 </a>
@@ -261,7 +261,7 @@ export default function Testimonials() {
               size="lg"
               className="packcam-cta-shimmer w-fit rounded-lg px-6 shadow-sm"
             >
-              <a href={INSTALLER_URL}>
+              <a href={DOWNLOAD_URL}>
                 Tải PackCam cho Windows
                 <ArrowRight className="size-4" />
               </a>

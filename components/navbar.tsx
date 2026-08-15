@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
-import { INSTALLER_URL } from "@/lib/download";
+import { DOWNLOAD_URL } from "@/lib/download";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -69,7 +69,7 @@ export default function NavBar() {
 
         <div className="hidden md:block">
           <Button asChild size="lg" className="rounded-lg px-5 shadow-sm">
-            <a href={INSTALLER_URL}>
+            <a href={DOWNLOAD_URL}>
               Tải Windows
               <Download className="size-4" />
             </a>
@@ -116,7 +116,7 @@ export default function NavBar() {
 
               <Button asChild size="lg" className="mt-2 rounded-lg">
                 <a
-                  href={INSTALLER_URL}
+                  href={DOWNLOAD_URL}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Tải bản cài Windows
