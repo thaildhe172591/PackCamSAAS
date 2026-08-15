@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { telegramBuyLink } from "@/lib/telegram";
+import { INSTALLER_URL } from "@/lib/download";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -149,7 +150,7 @@ const Footer = () => {
               Tải trực tiếp bản cài PackCam cho Windows 64-bit.
             </p>
             <Button asChild className="rounded-lg shadow-sm">
-              <a href="/downloads/PackCam_0.4.0_x64-setup.exe">
+              <a href={INSTALLER_URL}>
                 Tải PackCam
                 <Download className="size-4" />
               </a>

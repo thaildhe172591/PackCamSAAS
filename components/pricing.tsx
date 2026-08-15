@@ -8,8 +8,7 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Download, MessageCircle, Send, Sparkles, Star } from "lucide-react";
 import { PLAN_CODE, telegramBuyLink } from "@/lib/telegram";
-
-const INSTALLER = "/downloads/PackCam_0.4.0_x64-setup.exe";
+import { INSTALLER_URL } from "@/lib/download";
 
 /**
  * Mỗi gói có một nút chính và (tuỳ chọn) một link phụ. Trước đây ba cờ rời rạc — `ctaIcon`,
@@ -53,7 +52,7 @@ const plans: Plan[] = [
     isMostPop: false,
     // Gói thử phải tải file trước rồi mới xin key, nên tải-về là nút chính. Và link Telegram
     // ở đây KHÔNG mang payload: trial chỉ admin phát tay, bot không mở wizard cho nó.
-    primary: { label: "Tải PackCam về máy", kind: "download", href: INSTALLER },
+    primary: { label: "Tải PackCam về máy", kind: "download", href: INSTALLER_URL },
     secondary: { label: "Xin key dùng thử qua Telegram", kind: "telegram", href: telegramBuyLink() },
     features: [
       "2 bàn đóng gói",
@@ -74,7 +73,7 @@ const plans: Plan[] = [
       kind: "telegram",
       href: telegramBuyLink(PLAN_CODE.standard),
     },
-    secondary: { label: "Tải bản cài đặt", kind: "download", href: INSTALLER },
+    secondary: { label: "Tải bản cài đặt", kind: "download", href: INSTALLER_URL },
     features: [
       "2 bàn đóng gói",
       "Quay bằng chứng, khắc mã vận đơn lên khung hình",
@@ -96,7 +95,7 @@ const plans: Plan[] = [
       kind: "telegram",
       href: telegramBuyLink(PLAN_CODE.pro),
     },
-    secondary: { label: "Tải bản cài đặt", kind: "download", href: INSTALLER },
+    secondary: { label: "Tải bản cài đặt", kind: "download", href: INSTALLER_URL },
     features: [
       "8 bàn đóng gói",
       "Camera IP / đầu ghi NVR, không chỉ webcam USB",
