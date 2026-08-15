@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { telegramBuyLink } from "@/lib/telegram";
 
 export const CONTACT_WIDGET_OPEN_EVENT = "packcam:open-contact-widget";
 
@@ -27,7 +28,20 @@ type ContactItem = {
   accentClass: string;
 };
 
-const contacts: ContactItem[] = [
+/**
+ * Telegram tách hẳn khỏi ba kênh còn lại vì nó khác vai trò, không phải khác thương hiệu:
+ * bot tự phát key ngay trong chat, còn Fanpage/Zalo/điện thoại là người trả lời trong giờ làm.
+ * Để cả bốn ngang hàng như trước thì khách không có lý do gì chọn cái nhanh nhất.
+ */
+const buyChannel: ContactItem = {
+  label: "Mua key qua Telegram",
+  value: "Bot tự báo giá và phát key, 24/7",
+  href: telegramBuyLink(),
+  icon: Send,
+  accentClass: "bg-primary text-white",
+};
+
+const supportChannels: ContactItem[] = [
   {
     label: "Fanpage",
     value: "facebook.com/packcampage",
@@ -40,7 +54,7 @@ const contacts: ContactItem[] = [
     value: "0387048191",
     href: "https://zalo.me/0387048191",
     icon: PhoneCall,
-    accentClass: "bg-primary text-white",
+    accentClass: "bg-[#ffe4d0] text-[#24150c]",
   },
   {
     label: "Số điện thoại",
@@ -48,13 +62,6 @@ const contacts: ContactItem[] = [
     href: "tel:0387048191",
     icon: Phone,
     accentClass: "bg-[#ffe4d0] text-[#24150c]",
-  },
-  {
-    label: "Telegram",
-    value: "PackCam Corp / @packcam1243",
-    href: "https://t.me/packcam1243",
-    icon: Send,
-    accentClass: "border border-[#ffc78f] bg-[#fff4e7] text-[#24150c]",
   },
 ];
 
@@ -94,9 +101,10 @@ export default function ContactWidget() {
           >
             <div className="flex items-start justify-between gap-4 border-b border-[#ffe0c2] bg-[linear-gradient(135deg,#fffaf4_0%,#fff0df_100%)] px-4 py-4">
               <div>
-                <p className="text-sm font-bold">Liên hệ tư vấn PackCam</p>
+                <p className="text-sm font-bold">Mua key &amp; hỗ trợ PackCam</p>
                 <p className="mt-1 text-xs leading-5 text-[#6f635b]">
-                  Chọn kênh thuận tiện, đội hỗ trợ sẽ phản hồi nhanh nhất có thể.
+                  Bot Telegram báo giá và phát key ngay. Ba kênh còn lại có người
+                  trả lời trong giờ làm việc.
                 </p>
               </div>
 
@@ -113,7 +121,41 @@ export default function ContactWidget() {
             </div>
 
             <div className="space-y-2 p-3">
-              {contacts.map((contact, index) => {
+              <motion.a
+                href={buyChannel.href}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.18 }}
+                className="group flex items-center gap-3 rounded-xl border border-[#ffb15c] bg-[linear-gradient(135deg,#fff4e7_0%,#ffe8d2_100%)] px-3 py-3 shadow-[0_2px_10px_rgba(255,122,26,0.14)] transition-colors duration-200 hover:border-primary hover:bg-[#ffe8d2] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
+              >
+                <span
+                  className={`flex size-10 shrink-0 items-center justify-center rounded-full shadow-sm ${buyChannel.accentClass}`}
+                >
+                  <buyChannel.icon className="size-[18px]" />
+                </span>
+
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-bold leading-5">
+                    {buyChannel.label}
+                  </span>
+                  <span className="block truncate text-xs leading-5 text-[#8a6a4f]">
+                    {buyChannel.value}
+                  </span>
+                </span>
+
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/15 transition-colors group-hover:bg-primary/25">
+                  <ArrowUpRight className="size-3.5" />
+                </span>
+              </motion.a>
+
+              <p className="px-1 pt-1 text-[11px] font-semibold uppercase tracking-wider text-[#9b8d84]">
+                Hoặc hỏi trực tiếp
+              </p>
+
+              {supportChannels.map((contact, index) => {
                 const Icon = contact.icon;
 
                 return (

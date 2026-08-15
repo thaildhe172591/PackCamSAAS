@@ -6,7 +6,33 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { Download, MessageCircle, Sparkles, Star } from "lucide-react";
+import { Download, MessageCircle, Send, Sparkles, Star } from "lucide-react";
+import { PLAN_CODE, telegramBuyLink } from "@/lib/telegram";
+
+const INSTALLER = "/downloads/PackCam_0.4.0_x64-setup.exe";
+
+/**
+ * Mỗi gói có một nút chính và (tuỳ chọn) một link phụ. Trước đây ba cờ rời rạc — `ctaIcon`,
+ * `opensContactOnClick`, `href` — phải đọc chéo nhau mới biết nút làm gì; tách hẳn thành
+ * primary/secondary để nhìn là biết, và để đổi thứ tự ưu tiên chỉ cần hoán hai dòng dữ liệu.
+ */
+type Cta = {
+  label: string;
+  kind: "telegram" | "download" | "contact";
+  href?: string;
+};
+
+type Plan = {
+  name: string;
+  price: string;
+  priceSuffix: string;
+  desc: string;
+  isMostPop: boolean;
+  primary: Cta;
+  secondary?: Cta;
+  features: string[];
+  roadmap?: string[];
+};
 
 /**
  * Bảng gói phải khớp hai nguồn sự thật, không được tự chế:
@@ -18,17 +44,17 @@ import { Download, MessageCircle, Sparkles, Star } from "lucide-react";
  *
  * Mọi thứ đang phát triển đều phải ghi rõ là lộ trình, không trộn vào danh sách tính năng.
  */
-const plans = [
+const plans: Plan[] = [
   {
     name: "Dùng thử",
     price: "Miễn phí",
     priceSuffix: "7 ngày",
     desc: "Chạy thử toàn bộ trên dữ liệu thật của shop.",
     isMostPop: false,
-    cta: "Tải về & nhận key thử",
-    ctaIcon: "download",
-    opensContactOnClick: true,
-    href: "/downloads/PackCam_0.4.0_x64-setup.exe",
+    // Gói thử phải tải file trước rồi mới xin key, nên tải-về là nút chính. Và link Telegram
+    // ở đây KHÔNG mang payload: trial chỉ admin phát tay, bot không mở wizard cho nó.
+    primary: { label: "Tải PackCam về máy", kind: "download", href: INSTALLER },
+    secondary: { label: "Xin key dùng thử qua Telegram", kind: "telegram", href: telegramBuyLink() },
     features: [
       "2 bàn đóng gói",
       "Mở đủ tính năng như gói Pro",
@@ -43,10 +69,12 @@ const plans = [
     priceSuffix: "trọn đời",
     desc: "Mua một lần, dùng vĩnh viễn trên 1 máy.",
     isMostPop: false,
-    cta: "Tải về & tư vấn",
-    ctaIcon: "download",
-    opensContactOnClick: true,
-    href: "/downloads/PackCam_0.4.0_x64-setup.exe",
+    primary: {
+      label: "Mua qua Telegram",
+      kind: "telegram",
+      href: telegramBuyLink(PLAN_CODE.standard),
+    },
+    secondary: { label: "Tải bản cài đặt", kind: "download", href: INSTALLER },
     features: [
       "2 bàn đóng gói",
       "Quay bằng chứng, khắc mã vận đơn lên khung hình",
@@ -63,10 +91,12 @@ const plans = [
     priceSuffix: "/năm",
     desc: "Cho kho nhiều bàn, cần giám sát và đối soát.",
     isMostPop: true,
-    cta: "Tải về & tư vấn",
-    ctaIcon: "download",
-    opensContactOnClick: true,
-    href: "/downloads/PackCam_0.4.0_x64-setup.exe",
+    primary: {
+      label: "Mua qua Telegram",
+      kind: "telegram",
+      href: telegramBuyLink(PLAN_CODE.pro),
+    },
+    secondary: { label: "Tải bản cài đặt", kind: "download", href: INSTALLER },
     features: [
       "8 bàn đóng gói",
       "Camera IP / đầu ghi NVR, không chỉ webcam USB",
@@ -84,9 +114,9 @@ const plans = [
     priceSuffix: "",
     desc: "Cho chuỗi nhiều kho cần triển khai riêng.",
     isMostPop: false,
-    cta: "Liên hệ triển khai riêng",
-    ctaIcon: "contact",
-    href: "#contact",
+    // Enterprise cố ý KHÔNG deep link: gói này gồm khảo sát, cài tại chỗ và SLA thoả thuận —
+    // những thứ wizard trong bot không chốt được. Đẩy khách vào wizard là hứa sai hình thức bán.
+    primary: { label: "Liên hệ triển khai riêng", kind: "contact" },
     features: [
       "Không giới hạn số bàn đóng gói",
       "Cài đặt và cấu hình tại chỗ",
@@ -103,11 +133,19 @@ const plans = [
   },
 ];
 
+// 7 ngày chứ không phải 45: `PLANS.trial` bên bot phát đúng 7 ngày (45 là gói `poc` dành cho
+// doanh nghiệp chạy thử trước khi ký). Hứa 45 ở đây là hứa thứ công cụ cấp key không giao.
 const conversionCues = [
   "Standard mua một lần, dùng vĩnh viễn — không phí duy trì hằng tháng",
-  "Dùng thử 45 ngày mở đủ tính năng, trên dữ liệu thật của shop",
-  "Hỗ trợ qua Fanpage, Zalo, Telegram và điện thoại",
+  "Dùng thử 7 ngày mở đủ tính năng, trên dữ liệu thật của shop",
+  "Chọn gói và nhận key ngay trong Telegram, không cần chờ tư vấn",
 ];
+
+const CTA_ICON = {
+  telegram: Send,
+  download: Download,
+  contact: MessageCircle,
+} as const;
 
 export default function Pricing() {
   return (
@@ -149,7 +187,13 @@ export default function Pricing() {
         </motion.div>
 
         <div className="mx-auto grid w-full items-start gap-4 md:grid-cols-2 xl:grid-cols-[0.95fr_1fr_1.2fr_1fr] xl:gap-4">
-          {plans.map((plan, index) => (
+          {plans.map((plan, index) => {
+            const PrimaryIcon = CTA_ICON[plan.primary.kind];
+            const SecondaryIcon = plan.secondary
+              ? CTA_ICON[plan.secondary.kind]
+              : null;
+
+            return (
             <motion.div
               key={plan.name}
               initial={{ y: 20, opacity: 0 }}
@@ -260,48 +304,59 @@ export default function Pricing() {
                 </CardContent>
 
                 <CardFooter
-                  className={`px-5 pb-5 pt-3 ${plan.isMostPop ? "xl:px-7 xl:pb-7 xl:pt-3" : ""}`}
+                  className={`flex flex-col gap-2.5 px-5 pb-5 pt-3 ${plan.isMostPop ? "xl:px-7 xl:pb-7 xl:pt-3" : ""}`}
                 >
                   <Button
                     asChild
-                    className={`w-full rounded-lg border font-semibold [&_svg]:text-current ${
+                    className={`packcam-cta-shimmer w-full rounded-lg border font-semibold [&_svg]:text-current ${
                       plan.isMostPop
-                        ? "packcam-cta-shimmer border-transparent bg-[#ffe4d0] text-[#24150c] hover:bg-white"
-                        : plan.ctaIcon === "contact" || plan.opensContactOnClick
-                          ? "packcam-cta-shimmer border-[#ffd0ad] bg-[#fff3e8] text-[#24150c] hover:border-[#ffb15c] hover:bg-white"
-                          : "border-[#ffd0ad] bg-[#fff3e8] text-[#24150c] hover:border-[#ffb15c] hover:bg-white"
+                        ? "border-transparent bg-[#ffe4d0] text-[#24150c] hover:bg-white"
+                        : "border-[#ffd0ad] bg-[#fff3e8] text-[#24150c] hover:border-[#ffb15c] hover:bg-white"
                     }`}
                     variant={plan.isMostPop ? "secondary" : "outline"}
                     size="lg"
                   >
                     <a
-                      href={plan.href}
-                      download={plan.ctaIcon === "download" ? true : undefined}
+                      href={plan.primary.href ?? "#contact"}
+                      download={plan.primary.kind === "download" ? true : undefined}
+                      target={plan.primary.kind === "telegram" ? "_blank" : undefined}
+                      rel={plan.primary.kind === "telegram" ? "noreferrer" : undefined}
                       className="inline-flex items-center gap-2"
                       onClick={(event) => {
-                        if (plan.ctaIcon === "contact") {
+                        if (plan.primary.kind === "contact") {
                           event.preventDefault();
                           openContactWidget();
-                          return;
-                        }
-
-                        if (plan.opensContactOnClick) {
-                          window.setTimeout(openContactWidget, 150);
                         }
                       }}
                     >
-                      {plan.cta}
-                      {plan.ctaIcon === "contact" ? (
-                        <MessageCircle className="size-4" />
-                      ) : (
-                        <Download className="size-4" />
-                      )}
+                      {plan.primary.label}
+                      <PrimaryIcon className="size-4" />
                     </a>
                   </Button>
+
+                  {plan.secondary && SecondaryIcon && (
+                    <a
+                      href={plan.secondary.href ?? "#contact"}
+                      download={
+                        plan.secondary.kind === "download" ? true : undefined
+                      }
+                      target={
+                        plan.secondary.kind === "telegram" ? "_blank" : undefined
+                      }
+                      rel={
+                        plan.secondary.kind === "telegram" ? "noreferrer" : undefined
+                      }
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 underline-offset-4 transition-colors hover:text-[#ffb15c] hover:underline"
+                    >
+                      <SecondaryIcon className="size-3.5" />
+                      {plan.secondary.label}
+                    </a>
+                  )}
                 </CardFooter>
               </Card>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
