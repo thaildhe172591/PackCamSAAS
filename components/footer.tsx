@@ -11,7 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { telegramBuyLink } from "@/lib/telegram";
-import { DOWNLOAD_URL } from "@/lib/download";
+import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -151,7 +151,7 @@ const Footer = () => {
             </p>
             <Button asChild className="rounded-lg shadow-sm">
               <a href={DOWNLOAD_URL}>
-                Tải PackCam
+                Tải PackCam · {LATEST_VERSION}
                 <Download className="size-4" />
               </a>
             </Button>

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Download, MonitorPlay, Send, ShieldCheck, WifiOff } from "lucide-react";
-import { DOWNLOAD_URL } from "@/lib/download";
+import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
 import { telegramBuyLink } from "@/lib/telegram";
 import { Eyebrow, Reveal, Stagger, StaggerItem } from "@/components/primitives";
 import Image from "next/image";
@@ -91,7 +91,7 @@ export default function Hero() {
               className="packcam-cta-shimmer rounded-lg px-6 shadow-sm"
             >
               <a href={DOWNLOAD_URL}>
-                Tải bản cài Windows
+                Tải bản cài Windows · {LATEST_VERSION}
                 <Download className="size-4" />
               </a>
             </Button>

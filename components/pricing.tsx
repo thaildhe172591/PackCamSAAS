@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Download, MessageCircle, Send, Sparkles, Star } from "lucide-react";
 import { PLAN_CODE, telegramBuyLink } from "@/lib/telegram";
-import { DOWNLOAD_URL } from "@/lib/download";
+import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
 import { Reveal, Spotlight, Stagger, StaggerItem } from "@/components/primitives";
 
 /**
@@ -56,7 +56,7 @@ const plans: Plan[] = [
     isMostPop: false,
     // Gói thử phải tải file trước rồi mới xin key, nên tải-về là nút chính. Và link Telegram
     // ở đây KHÔNG mang payload: trial chỉ admin phát tay, bot không mở wizard cho nó.
-    primary: { label: "Tải PackCam về máy", kind: "download", href: DOWNLOAD_URL },
+    primary: { label: `Tải PackCam về máy · ${LATEST_VERSION}`, kind: "download", href: DOWNLOAD_URL },
     secondary: { label: "Xin key dùng thử qua Telegram", kind: "telegram", href: telegramBuyLink() },
     features: [
       "Mở đủ tính năng như gói Pro",
@@ -78,7 +78,7 @@ const plans: Plan[] = [
       kind: "telegram",
       href: telegramBuyLink(PLAN_CODE.standard),
     },
-    secondary: { label: "Tải bản cài đặt", kind: "download", href: DOWNLOAD_URL },
+    secondary: { label: `Tải bản cài đặt · ${LATEST_VERSION}`, kind: "download", href: DOWNLOAD_URL },
     features: [
       "Quay bằng chứng, khắc mã vận đơn lên khung hình",
       "Tra cứu video theo mã, nhân viên, bàn, ngày",
@@ -100,7 +100,7 @@ const plans: Plan[] = [
       kind: "telegram",
       href: telegramBuyLink(PLAN_CODE.pro),
     },
-    secondary: { label: "Tải bản cài đặt", kind: "download", href: DOWNLOAD_URL },
+    secondary: { label: `Tải bản cài đặt · ${LATEST_VERSION}`, kind: "download", href: DOWNLOAD_URL },
     features: [
       "Camera IP / đầu ghi NVR, không chỉ webcam USB",
       "Màn quản lý đơn: mỗi đơn quay mấy lần, thời lượng trung bình",
