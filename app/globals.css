@@ -17,6 +17,13 @@
     scroll-behavior: smooth;
   }
 
+  /* Navbar dính ở trên cao ~72px, nên mọi liên kết #anchor đều nhảy tới chỗ tiêu đề section bị
+     navbar che mất. Chừa sẵn khoảng đó thay vì bù trừ ở từng liên kết. */
+  section[id],
+  div[id] {
+    scroll-margin-top: 6.5rem;
+  }
+
   body {
     @apply bg-background text-foreground border-border;
     background-image:

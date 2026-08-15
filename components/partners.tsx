@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { SectionHeading, Spotlight, Stagger, StaggerItem } from "@/components/primitives";
 import {
   Camera,
   FileSearch,
@@ -10,88 +10,103 @@ import {
   Workflow,
 } from "lucide-react";
 
+/**
+ * Lưới bento thay cho sáu ô bằng nhau. Sáu card đồng kích thước nói với mắt rằng sáu tính năng
+ * quan trọng ngang nhau — không đúng: "quay tự động" và "tra cứu theo đơn" là lý do khách mua,
+ * bốn cái còn lại là điều kiện đủ. `span` ở đây là thứ tự ưu tiên viết bằng kích thước.
+ */
 const features = [
   {
-    title: "Quay tự động",
+    title: "Quay tự động theo đơn",
     description:
-      "Ghi lại toàn bộ quá trình đóng gói để giảm rủi ro thiếu hàng, nhầm hàng và tranh chấp sau giao.",
+      "Nhân viên quét mã vận đơn là camera bắt đầu ghi, mã được khắc thẳng lên khung hình nên video tự nó chứng minh thuộc về đơn nào.",
     icon: Camera,
+    span: "lg:col-span-4",
+    feature: true,
+  },
+  {
+    title: "Dữ liệu an toàn",
+    description: "Lưu tập trung, phân quyền theo vai trò, hạn chế thất thoát.",
+    icon: Lock,
+    span: "lg:col-span-2",
+  },
+  {
+    title: "Vận hành 24/7",
+    description: "Chạy liên tục cho kho, quầy đóng gói và ca cao điểm.",
+    icon: Workflow,
+    span: "lg:col-span-2",
+  },
+  {
+    title: "Tra cứu trong vài giây",
+    description:
+      "Tìm theo mã vận đơn, nhân viên, bàn hoặc ngày. Không phải tua tay hàng giờ để tìm đúng hai phút cần xem.",
+    icon: FileSearch,
+    span: "lg:col-span-4",
+    feature: true,
   },
   {
     title: "Bảo vệ khách hàng",
     description:
-      "Cung cấp bằng chứng minh bạch khi khách phản hồi thiếu sản phẩm, sai sản phẩm hoặc kiện hàng bất thường.",
+      "Bằng chứng minh bạch khi khách phản hồi thiếu sản phẩm, sai sản phẩm hoặc kiện hàng bất thường.",
     icon: ShieldCheck,
-  },
-  {
-    title: "Tra cứu theo đơn",
-    description:
-      "Tìm nhanh video theo đơn hàng, thời gian hoặc camera để đội CSKH phản hồi khách hàng tự tin hơn.",
-    icon: FileSearch,
-  },
-  {
-    title: "Vận hành 24/7",
-    description:
-      "Theo dõi liên tục cho kho, quầy đóng gói và khu vực xử lý đơn trong các ca vận hành cao điểm.",
-    icon: Workflow,
-  },
-  {
-    title: "Dữ liệu an toàn",
-    description:
-      "Lưu trữ tập trung, dễ kiểm soát quyền truy cập và hạn chế thất thoát dữ liệu quan trọng.",
-    icon: Lock,
+    span: "lg:col-span-3",
   },
   {
     title: "Hỗ trợ khiếu nại",
     description:
-      "Rút ngắn thời gian xác minh, đối soát và xử lý khi phát sinh yêu cầu từ khách hàng hoặc sàn bán.",
+      "Rút ngắn thời gian xác minh và đối soát khi có yêu cầu từ khách hàng hoặc từ sàn.",
     icon: Headphones,
+    span: "lg:col-span-3",
   },
 ];
 
 export default function Partners() {
   return (
-    <section id="features" className="px-4 py-16 lg:px-8 lg:py-20">
+    <section id="features" className="px-4 py-16 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mx-auto mb-12 max-w-3xl text-center"
-        >
-          <span className="inline-flex rounded-lg border border-primary/15 bg-primary/7 px-4 py-2 text-sm font-semibold text-primary">
-            Tính năng nổi bật
-          </span>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl">
-            Kiểm soát đóng gói bằng video, xử lý khiếu nại bằng dữ liệu
-          </h2>
-          <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            PackCam giúp doanh nghiệp biến camera đóng gói thành một hệ thống bằng
-            chứng có tổ chức, dễ tra cứu và đủ tin cậy để phục vụ vận hành hằng ngày.
-          </p>
-        </motion.div>
+        <SectionHeading
+          eyebrow="Tính năng"
+          title="Kiểm soát đóng gói bằng video, xử lý khiếu nại bằng dữ liệu"
+          lead="PackCam biến camera đóng gói thành một hệ thống bằng chứng có tổ chức, dễ tra cứu và đủ tin cậy để phục vụ vận hành hằng ngày."
+          align="center"
+          className="mb-12"
+        />
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: index * 0.05 }}
-              className="group rounded-lg border border-border bg-white p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1"
-            >
-              <div className="mb-5 flex size-12 items-center justify-center rounded-lg bg-primary/12 text-primary">
-                <feature.icon className="size-5" />
-              </div>
-              <h3 className="text-xl font-bold text-foreground">{feature.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                {feature.description}
-              </p>
-            </motion.div>
+        <Stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          {features.map((feature) => (
+            <StaggerItem key={feature.title} className={feature.span}>
+              <Spotlight className="h-full rounded-2xl border border-border bg-card/85 p-6 shadow-[0_18px_44px_-28px_rgba(120,60,10,0.4)] backdrop-blur-sm transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-primary/35 lg:p-7">
+                <div className="relative flex h-full flex-col">
+                  <div
+                    className={`mb-5 flex items-center justify-center rounded-xl bg-primary/12 text-primary transition-transform duration-300 group-hover:scale-105 ${
+                      feature.feature ? "size-14" : "size-11"
+                    }`}
+                  >
+                    <feature.icon
+                      className={feature.feature ? "size-6" : "size-5"}
+                      strokeWidth={1.75}
+                    />
+                  </div>
+
+                  <h3
+                    className={`font-bold tracking-tight text-foreground ${
+                      feature.feature ? "text-xl sm:text-2xl" : "text-base"
+                    }`}
+                  >
+                    {feature.title}
+                  </h3>
+                  <p
+                    className={`mt-3 leading-7 text-muted-foreground ${
+                      feature.feature ? "max-w-[52ch] text-base" : "text-sm"
+                    }`}
+                  >
+                    {feature.description}
+                  </p>
+                </div>
+              </Spotlight>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

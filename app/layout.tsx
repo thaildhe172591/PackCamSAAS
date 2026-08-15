@@ -11,10 +11,12 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"),
-  title: "PackCam | Quay tự động, lưu trữ an toàn",
+  // Ảnh OG được nối tương đối vào base này. Để `localhost:3000` thì mọi link chia sẻ ra Facebook,
+  // Zalo hay Telegram đều trỏ ảnh về máy người xem — nghĩa là không hiện ảnh nào cả.
+  metadataBase: new URL("https://packcam.online"),
+  title: "PackCam | Quay đóng gói tự động, chốt khiếu nại bằng video",
   description:
-    "Landing page chính thức của PackCam với bộ banner, poster và link tải Windows installer.",
+    "Phần mềm ghi hình quá trình đóng gói, khắc mã vận đơn lên khung hình và tra cứu video theo đơn để xử lý khiếu nại. Chạy trên Windows, dùng thử 7 ngày.",
 };
 
 export default function RootLayout({
