@@ -3,6 +3,7 @@ import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import NavBar from "@/components/navbar";
+import { COMPANY } from "@/lib/company";
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -19,6 +20,29 @@ export const metadata: Metadata = {
     "Phần mềm ghi hình quá trình đóng gói, khắc mã vận đơn lên khung hình và tra cứu video theo đơn để xử lý khiếu nại. Chạy trên Windows, dùng thử 7 ngày.",
 };
 
+// Dữ liệu có cấu trúc cho máy đọc: bot xác minh và Google lấy tên, founder, năm thành lập, địa
+// điểm từ đây thay vì phải đoán từ nội dung tiếng Việt. Không có `legalName` vì chưa có pháp nhân.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: COMPANY.name,
+  url: COMPANY.url,
+  logo: `${COMPANY.url}/packcam/packcam-app-icon-1.png`,
+  email: COMPANY.email,
+  foundingDate: COMPANY.foundingDate,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: COMPANY.cityEn,
+    addressCountry: "VN",
+  },
+  founder: {
+    "@type": "Person",
+    name: COMPANY.founder.name,
+    sameAs: COMPANY.founder.linkedin,
+  },
+  sameAs: COMPANY.sameAs,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,6 +51,10 @@ export default function RootLayout({
   return (
     <html lang="vi" suppressHydrationWarning>
       <body className={`${beVietnamPro.className} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Providers>
           <NavBar />
           {children}

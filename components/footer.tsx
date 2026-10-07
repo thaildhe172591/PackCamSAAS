@@ -12,16 +12,18 @@ import {
 } from "lucide-react";
 import { telegramBuyLink } from "@/lib/telegram";
 import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
+import { COMPANY } from "@/lib/company";
 import Image from "next/image";
 import Link from "next/link";
 
 const footerLinks = [
-  { name: "Tính năng", href: "#features" },
-  { name: "Banner", href: "#banners" },
-  { name: "Poster", href: "#posters" },
-  { name: "Bảng giá", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Liên hệ", href: "#contact" },
+  { name: "Tính năng", href: "/#features" },
+  { name: "Banner", href: "/#banners" },
+  { name: "Poster", href: "/#posters" },
+  { name: "Bảng giá", href: "/#pricing" },
+  { name: "FAQ", href: "/#faq" },
+  { name: "Liên hệ", href: "/#contact" },
+  { name: "Giới thiệu", href: "/about" },
 ];
 
 const contactLinks: {
@@ -158,8 +160,14 @@ const Footer = () => {
           </div>
         </motion.div>
 
-        <div className="mt-8 border-t border-border pt-5 text-sm text-muted-foreground">
-          © {year} PackCam. All rights reserved.
+        <div className="mt-8 flex flex-col gap-2 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:justify-between">
+          <span>© {year} {COMPANY.name}. All rights reserved.</span>
+          <span>
+            Founded by {COMPANY.founder.name} · {COMPANY.cityEn}, {COMPANY.countryEn} ·{" "}
+            <a href={`mailto:${COMPANY.email}`} className="hover:text-foreground">
+              {COMPANY.email}
+            </a>
+          </span>
         </div>
       </div>
     </footer>

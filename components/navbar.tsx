@@ -9,12 +9,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const menuItems = [
-  { name: "Tính năng", href: "#features" },
-  { name: "Minh bạch", href: "#banners" },
-  { name: "Khiếu nại", href: "#posters" },
-  { name: "Bảng giá", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Liên hệ", href: "#contact" },
+  { name: "Tính năng", href: "/#features" },
+  { name: "Minh bạch", href: "/#banners" },
+  { name: "Khiếu nại", href: "/#posters" },
+  { name: "Bảng giá", href: "/#pricing" },
+  { name: "FAQ", href: "/#faq" },
+  { name: "Liên hệ", href: "/#contact" },
 ];
 
 export default function NavBar() {
