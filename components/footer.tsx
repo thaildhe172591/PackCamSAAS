@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import {
   Download,
   ExternalLink,
+  Mail,
   MessageCircle,
   PhoneCall,
   Send,
@@ -33,6 +34,12 @@ const contactLinks: {
   icon: LucideIcon;
 }[] = [
   {
+    name: "Email",
+    value: COMPANY.email,
+    href: `mailto:${COMPANY.email}`,
+    icon: Mail,
+  },
+  {
     name: "Fanpage",
     value: "facebook.com/packcampage",
     href: "https://www.facebook.com/packcampage",
@@ -52,6 +59,10 @@ const contactLinks: {
   },
 ];
 
+// "2026-01" → "Tháng 01/2026"
+const [foundedYear, foundedMonth] = COMPANY.foundingDate.split("-");
+const foundedVi = `Tháng ${foundedMonth}/${foundedYear}`;
+
 const Footer = () => {
   const year = new Date().getFullYear();
 
@@ -63,7 +74,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
-          className="grid gap-8 lg:grid-cols-[1.05fr_0.65fr_1fr_0.8fr]"
+          className="grid grid-cols-1 gap-8 lg:grid-cols-[1.05fr_0.65fr_1fr_0.8fr]"
         >
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
@@ -87,6 +98,26 @@ const Footer = () => {
               PackCam giúp doanh nghiệp lưu lại bằng chứng đóng gói, bảo vệ uy tín
               dịch vụ và xử lý khiếu nại dựa trên dữ liệu rõ ràng.
             </p>
+
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
+              <dt className="text-muted-foreground">Nhà sáng lập</dt>
+              <dd className="font-medium text-foreground">
+                <a
+                  href={COMPANY.founder.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline-offset-4 hover:underline"
+                >
+                  {COMPANY.founder.name}
+                </a>
+              </dd>
+              <dt className="text-muted-foreground">Thành lập</dt>
+              <dd className="font-medium text-foreground">{foundedVi}</dd>
+              <dt className="text-muted-foreground">Địa chỉ</dt>
+              <dd className="font-medium text-foreground">
+                {COMPANY.city}, {COMPANY.country}
+              </dd>
+            </dl>
           </div>
 
           <div className="space-y-4">
@@ -119,8 +150,7 @@ const Footer = () => {
                     <a
                       key={item.name}
                       href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
+                      {...(item.href.startsWith("http") && { target: "_blank", rel: "noreferrer" })}
                       className="group flex items-center justify-between gap-3 rounded-lg bg-white/70 px-3 py-3 text-sm transition-all hover:bg-white hover:shadow-sm"
                     >
                       <span className="flex min-w-0 items-center gap-3">
@@ -160,7 +190,8 @@ const Footer = () => {
           </div>
         </motion.div>
 
-        <div className="mt-8 flex flex-col gap-2 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:justify-between">
+        {/* pr-16 chừa chỗ cho nút chat nổi (ContactWidget) — không có thì nó đè lên email. */}
+        <div className="mt-8 flex flex-col gap-2 border-t border-border pr-16 pt-5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:justify-between">
           <span>© {year} {COMPANY.name}. All rights reserved.</span>
           <span>
             Founded by {COMPANY.founder.name} · {COMPANY.cityEn}, {COMPANY.countryEn} ·{" "}
