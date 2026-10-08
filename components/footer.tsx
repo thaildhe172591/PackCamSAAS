@@ -1,21 +1,29 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import {
+  CalendarDays,
   Download,
-  ExternalLink,
+  Facebook,
   Mail,
-  MessageCircle,
-  PhoneCall,
-  Send,
+  MapPin,
+  Phone,
+  UserRound,
   type LucideIcon,
 } from "lucide-react";
-import { telegramBuyLink } from "@/lib/telegram";
 import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
 import { COMPANY } from "@/lib/company";
 import Image from "next/image";
 import Link from "next/link";
+
+/*
+  Bố cục theo footer các công ty bảo hiểm (PJICO, MIC): nền màu thương hiệu đậm, khối thông tin
+  doanh nghiệp có icon ở trên, hotline lớn bên phải, rồi mới đến các cột điều hướng. Song ngữ
+  Việt–Anh vì người đọc gồm cả bộ duyệt hồ sơ nước ngoài.
+
+  Không bọc framer-motion như các section khác: motion render sẵn `opacity: 0` vào HTML, mà khối
+  thông tin doanh nghiệp ở đây là thứ bot xác minh cần đọc được khi không chạy JS.
+
+  Zalo và Telegram tạm ẩn khỏi footer; nút chat nổi và nút mua ở bảng giá vẫn dùng hai kênh này.
+*/
 
 const footerLinks = [
   { name: "Tính năng", href: "/#features" },
@@ -27,109 +35,126 @@ const footerLinks = [
   { name: "Giới thiệu", href: "/about" },
 ];
 
-const contactLinks: {
-  name: string;
-  value: string;
-  href: string;
-  icon: LucideIcon;
-}[] = [
+const [foundedYear, foundedMonth] = COMPANY.foundingDate.split("-");
+const phoneDisplay = COMPANY.phone.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const companyInfo: { icon: LucideIcon; label: string; sub?: string; href?: string }[] = [
   {
-    name: "Email",
-    value: COMPANY.email,
-    href: `mailto:${COMPANY.email}`,
-    icon: Mail,
+    icon: MapPin,
+    label: `${COMPANY.street}, ${COMPANY.city}, ${COMPANY.country}`,
+    sub: `${COMPANY.streetEn}, ${COMPANY.cityEn}, ${COMPANY.countryEn}`,
   },
+  { icon: Mail, label: COMPANY.email, href: `mailto:${COMPANY.email}` },
   {
-    name: "Fanpage",
-    value: "facebook.com/packcampage",
-    href: "https://www.facebook.com/packcampage",
-    icon: MessageCircle,
+    icon: UserRound,
+    label: `Nhà sáng lập · Founder: ${COMPANY.founder.name}`,
+    href: COMPANY.founder.linkedin,
   },
-  {
-    name: "Zalo",
-    value: "0387048191",
-    href: "https://zalo.me/0387048191",
-    icon: PhoneCall,
-  },
-  {
-    name: "Telegram",
-    value: "@packcambot — báo giá & phát key 24/7",
-    href: telegramBuyLink(),
-    icon: Send,
-  },
+  { icon: CalendarDays, label: `Thành lập · Founded: ${foundedMonth}/${foundedYear}` },
 ];
 
-// "2026-01" → "Tháng 01/2026"
-const [foundedYear, foundedMonth] = COMPANY.foundingDate.split("-");
-const foundedVi = `Tháng ${foundedMonth}/${foundedYear}`;
+const muted = "text-[#d3b9aa]";
+
+function ColumnTitle({ vi, en }: { vi: string; en: string }) {
+  return (
+    <h3 className="mb-6 text-base font-bold text-white after:mt-3 after:block after:h-0.5 after:w-12 after:rounded-full after:bg-primary">
+      {vi}
+      <span className={`block text-xs font-medium ${muted}`}>{en}</span>
+    </h3>
+  );
+}
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="border-t border-border bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-10 lg:px-8 lg:py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="grid grid-cols-1 gap-8 lg:grid-cols-[1.05fr_0.65fr_1fr_0.8fr]"
-        >
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative size-12 overflow-hidden rounded-lg border border-border bg-white shadow-sm">
+    <footer id="contact" className="bg-[#24150c] text-white">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-12 lg:px-8 lg:pt-14">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+          <div className="space-y-5">
+            <Link href="/" className="flex w-fit items-center gap-3">
+              <span className="relative size-12 overflow-hidden rounded-xl bg-white">
                 <Image
                   src="/packcam/packcam-app-icon-1.png"
                   alt="Biểu tượng PackCam"
                   fill
                   className="object-cover"
                 />
-              </div>
-              <div>
-                <p className="text-xl font-extrabold text-foreground">PackCam</p>
-                <p className="text-sm text-muted-foreground">
-                  Quản lý quay đóng gói và khiếu nại chuyên nghiệp
-                </p>
-              </div>
+              </span>
+              <span className="text-3xl font-extrabold tracking-tight">PackCam</span>
             </Link>
 
-            <p className="max-w-md text-sm leading-7 text-muted-foreground">
-              PackCam giúp doanh nghiệp lưu lại bằng chứng đóng gói, bảo vệ uy tín
-              dịch vụ và xử lý khiếu nại dựa trên dữ liệu rõ ràng.
-            </p>
+            <div className="space-y-1">
+              <p className="text-lg font-bold">{COMPANY.legalName}</p>
+              <p className={`text-sm ${muted}`}>{COMPANY.legalNameEn}</p>
+              {COMPANY.pendingVi && (
+                <p className="!mt-3 w-fit rounded-lg border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-medium text-[#ffb15c]">
+                  {capitalize(COMPANY.pendingVi)} · {capitalize(COMPANY.pendingEn)}
+                </p>
+              )}
+            </div>
 
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
-              <dt className="text-muted-foreground">Nhà sáng lập</dt>
-              <dd className="font-medium text-foreground">
-                <a
-                  href={COMPANY.founder.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline-offset-4 hover:underline"
-                >
-                  {COMPANY.founder.name}
-                </a>
-              </dd>
-              <dt className="text-muted-foreground">Thành lập</dt>
-              <dd className="font-medium text-foreground">{foundedVi}</dd>
-              <dt className="text-muted-foreground">Địa chỉ</dt>
-              <dd className="font-medium text-foreground">
-                {COMPANY.city}, {COMPANY.country}
-              </dd>
-            </dl>
+            <ul className={`space-y-3 text-sm ${muted}`}>
+              {companyInfo.map(({ icon: Icon, label, sub, href }) => (
+                <li key={label} className="flex items-start gap-3">
+                  <Icon className="mt-0.5 size-4 shrink-0 text-primary" />
+                  <span>
+                    {href ? (
+                      <a
+                        href={href}
+                        className="transition-colors hover:text-white"
+                        {...(href.startsWith("http") && { target: "_blank", rel: "noreferrer" })}
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      label
+                    )}
+                    {sub && <span className="block text-xs opacity-75">{sub}</span>}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase text-primary">
-              Điều hướng nhanh
-            </h3>
-            <div className="flex flex-col gap-2">
+          <div className="space-y-4 lg:text-right">
+            <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${muted}`}>
+              Hotline
+            </p>
+            <a
+              href={`tel:${COMPANY.phone}`}
+              className="!mt-1 inline-flex items-center gap-3 text-3xl font-extrabold tracking-tight transition-colors hover:text-primary"
+            >
+              <Phone className="size-6 text-primary" />
+              {phoneDisplay}
+            </a>
+            <p className={`italic ${muted}`}>Theo dõi PackCam · Follow us</p>
+            <div className="flex gap-2 lg:justify-end">
+              <a
+                href={COMPANY.sameAs[0]}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Fanpage Facebook"
+                className="flex size-10 items-center justify-center rounded-full border border-white/25 transition-colors hover:border-primary hover:bg-primary"
+              >
+                <Facebook className="size-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="my-10 h-px bg-white/10" />
+
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div>
+            <ColumnTitle vi="Điều hướng nhanh" en="Quick links" />
+            <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
               {footerLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className={`${muted} transition-colors hover:text-white`}
                 >
                   {item.name}
                 </Link>
@@ -137,65 +162,45 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase text-primary">
-              Liên hệ triển khai
-            </h3>
-            <div className="rounded-xl border border-orange-200 bg-[#fff7ed] p-3 shadow-sm">
-              <div className="space-y-2">
-                {contactLinks.map((item) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      {...(item.href.startsWith("http") && { target: "_blank", rel: "noreferrer" })}
-                      className="group flex items-center justify-between gap-3 rounded-lg bg-white/70 px-3 py-3 text-sm transition-all hover:bg-white hover:shadow-sm"
-                    >
-                      <span className="flex min-w-0 items-center gap-3">
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#090909] text-primary">
-                          <Icon className="size-4" />
-                        </span>
-                        <span className="min-w-0">
-                          <span className="block font-semibold text-foreground">
-                            {item.name}
-                          </span>
-                          <span className="block truncate text-muted-foreground">
-                            {item.value}
-                          </span>
-                        </span>
-                      </span>
-                      <ExternalLink className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
+          <div>
+            <ColumnTitle vi="Liên hệ hợp tác" en="Get in touch" />
+            <p className={`text-sm leading-7 ${muted}`}>
+              Tư vấn triển khai và báo giá cho kho của bạn.
+              <span className="block text-xs opacity-75">
+                Deployment and pricing for your warehouse.
+              </span>
+            </p>
+            <Button asChild className="mt-4 rounded-lg uppercase">
+              <a href={`mailto:${COMPANY.email}`}>
+                Gửi email · Email us
+                <Mail className="size-4" />
+              </a>
+            </Button>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase text-primary">
-              Tải ứng dụng
-            </h3>
-            <p className="text-sm leading-7 text-muted-foreground">
-              Tải trực tiếp bản cài PackCam cho Windows 64-bit.
+          <div>
+            <ColumnTitle vi="Tải ứng dụng" en="Download" />
+            <p className={`text-sm leading-7 ${muted}`}>
+              Bản cài PackCam cho Windows 64-bit.
+              <span className="block text-xs opacity-75">PackCam installer for Windows 64-bit.</span>
             </p>
-            <Button asChild className="rounded-lg shadow-sm">
+            <Button asChild className="mt-4 rounded-lg uppercase">
               <a href={DOWNLOAD_URL}>
                 Tải PackCam · {LATEST_VERSION}
                 <Download className="size-4" />
               </a>
             </Button>
           </div>
-        </motion.div>
+        </div>
 
         {/* pr-16 chừa chỗ cho nút chat nổi (ContactWidget) — không có thì nó đè lên email. */}
-        <div className="mt-8 flex flex-col gap-2 border-t border-border pr-16 pt-5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:justify-between">
+        <div
+          className={`mt-12 flex flex-col gap-2 border-t border-white/10 pr-16 pt-5 text-sm ${muted} sm:flex-row sm:flex-wrap sm:justify-between`}
+        >
           <span>© {year} {COMPANY.name}. All rights reserved.</span>
           <span>
             Founded by {COMPANY.founder.name} · {COMPANY.cityEn}, {COMPANY.countryEn} ·{" "}
-            <a href={`mailto:${COMPANY.email}`} className="hover:text-foreground">
+            <a href={`mailto:${COMPANY.email}`} className="hover:text-white">
               {COMPANY.email}
             </a>
           </span>

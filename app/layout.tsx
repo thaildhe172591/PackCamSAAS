@@ -29,9 +29,11 @@ const organizationJsonLd = {
   url: COMPANY.url,
   logo: `${COMPANY.url}/packcam/packcam-app-icon-1.png`,
   email: COMPANY.email,
+  telephone: `+84${COMPANY.phone.slice(1)}`,
   foundingDate: COMPANY.foundingDate,
   address: {
     "@type": "PostalAddress",
+    streetAddress: COMPANY.street,
     addressLocality: COMPANY.cityEn,
     addressCountry: "VN",
   },

@@ -16,12 +16,18 @@ export const metadata: Metadata = {
   doanh nghiệp, thứ có thể không chạy JS — nội dung phải thấy được ngay từ HTML server trả về.
 */
 
-const facts = [
+const facts: { en: string; vi: string; value: string; note?: string; href?: string }[] = [
+  {
+    en: "Company",
+    vi: "Công ty",
+    value: `${COMPANY.legalName} · ${COMPANY.legalNameEn}`,
+    note: COMPANY.pendingVi && `${COMPANY.pendingVi} · ${COMPANY.pendingEn}`,
+  },
   { en: "Founded", vi: "Thành lập", value: "January 2026 · Tháng 01/2026" },
   {
-    en: "Location",
-    vi: "Địa điểm",
-    value: `${COMPANY.cityEn}, ${COMPANY.countryEn} · ${COMPANY.city}, ${COMPANY.country}`,
+    en: "Address",
+    vi: "Địa chỉ",
+    value: `${COMPANY.street}, ${COMPANY.city}, ${COMPANY.country}`,
   },
   { en: "Founder", vi: "Nhà sáng lập", value: COMPANY.founder.name, href: COMPANY.founder.linkedin },
   { en: "Email", vi: "Email", value: COMPANY.email, href: `mailto:${COMPANY.email}` },
@@ -51,7 +57,9 @@ export default function About() {
             </p>
             <p className="text-base leading-8 text-muted-foreground sm:text-lg">
               PackCam was founded in January 2026 in {COMPANY.cityEn}, {COMPANY.countryEn},
-              by {COMPANY.founder.name}.
+              by {COMPANY.founder.name}. We are based at {COMPANY.streetEn}, {COMPANY.cityEn},{" "}
+              {COMPANY.countryEn}. PackCam is developed by {COMPANY.legalNameEn} (
+              {COMPANY.legalName}){COMPANY.pendingEn && ` — ${COMPANY.pendingEn}`}.
             </p>
           </article>
 
@@ -70,7 +78,9 @@ export default function About() {
               máy tính của kho và vẫn quay được khi mất mạng.
             </p>
             <p className="text-base leading-8 text-muted-foreground">
-              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái.
+              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái,
+              phát triển bởi {COMPANY.legalName}
+              {COMPANY.pendingVi && ` (${COMPANY.pendingVi})`}.
             </p>
           </article>
 
@@ -91,6 +101,11 @@ export default function About() {
                     </a>
                   ) : (
                     fact.value
+                  )}
+                  {fact.note && (
+                    <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                      {fact.note}
+                    </span>
                   )}
                 </dd>
               </div>
