@@ -85,10 +85,8 @@ const Footer = () => {
             </Link>
 
             <div className="space-y-1">
-              <p className="text-lg font-bold">Phần mềm quay đóng gói và xử lý khiếu nại</p>
-              <p className={`text-sm ${muted}`}>
-                Packing-video evidence software for e-commerce and fulfillment
-              </p>
+              <p className="text-lg font-bold">{COMPANY.legalName}</p>
+              <p className={`text-sm ${muted}`}>{COMPANY.legalNameEn}</p>
             </div>
 
             <ul className={`space-y-3 text-sm ${muted}`}>
@@ -193,7 +191,7 @@ const Footer = () => {
         <div
           className={`mt-12 flex flex-col gap-2 border-t border-white/10 pr-16 pt-5 text-sm ${muted} sm:flex-row sm:flex-wrap sm:justify-between`}
         >
-          <span>© {year} {COMPANY.name}. All rights reserved.</span>
+          <span>© {year} {COMPANY.legalNameEn}. All rights reserved.</span>
           <span>
             Founded by {COMPANY.founder.name} · {COMPANY.cityEn}, {COMPANY.countryEn} ·{" "}
             <a href={`mailto:${COMPANY.email}`} className="hover:text-white">

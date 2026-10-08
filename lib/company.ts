@@ -4,12 +4,13 @@
  * Ba chỗ này phải khớp từng chữ với hồ sơ đã khai ở bên ngoài (Anthropic startup program,
  * LinkedIn): bộ duyệt tự động đối chiếu chúng với nhau, lệch một chỗ là mất tác dụng xác minh.
  *
- * Hồ sơ ĐKDN "Công ty TNHH Công nghệ Packcam" đang nộp: chưa có giấy thì KHÔNG hiển thị tên công ty
- * ở đâu cả — ghi tên pháp nhân khi chưa được cấp là khai một pháp nhân chưa tồn tại. Có giấy thì
- * thêm `legalName` (+ tên tiếng nước ngoài đúng như trên giấy) vào đây, footer, /about và JSON-LD.
+ * Giấy ĐKDN đã cấp (2026-10-08). Hai tên dưới đây phải trùng từng chữ với giấy — tên tiếng Anh là
+ * "tên công ty viết bằng tiếng nước ngoài" trên giấy. Không hiển thị mã số thuế/thông tin đăng ký.
  */
 export const COMPANY = {
   name: "PackCam",
+  legalName: "Công ty TNHH Công nghệ Packcam",
+  legalNameEn: "Packcam Technology Company Limited",
   url: "https://packcam.online",
   email: "contact@packcam.online",
   phone: "0387048191",

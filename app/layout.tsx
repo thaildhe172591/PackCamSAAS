@@ -26,6 +26,8 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: COMPANY.name,
+  legalName: COMPANY.legalName,
+  alternateName: COMPANY.legalNameEn,
   url: COMPANY.url,
   logo: `${COMPANY.url}/packcam/packcam-app-icon-1.png`,
   email: COMPANY.email,

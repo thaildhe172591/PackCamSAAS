@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 */
 
 const facts: { en: string; vi: string; value: string; href?: string }[] = [
+  { en: "Company", vi: "Công ty", value: `${COMPANY.legalName} · ${COMPANY.legalNameEn}` },
   { en: "Founded", vi: "Thành lập", value: "January 2026 · Tháng 01/2026" },
   {
     en: "Address",
@@ -52,7 +53,8 @@ export default function About() {
             <p className="text-base leading-8 text-muted-foreground sm:text-lg">
               PackCam was founded in January 2026 in {COMPANY.cityEn}, {COMPANY.countryEn},
               by {COMPANY.founder.name}. We are based at {COMPANY.streetEn}, {COMPANY.cityEn},{" "}
-              {COMPANY.countryEn}.
+              {COMPANY.countryEn}. PackCam is developed by {COMPANY.legalNameEn} (
+              {COMPANY.legalName}).
             </p>
           </article>
 
@@ -71,7 +73,8 @@ export default function About() {
               máy tính của kho và vẫn quay được khi mất mạng.
             </p>
             <p className="text-base leading-8 text-muted-foreground">
-              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái.
+              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái,
+              phát triển bởi {COMPANY.legalName}.
             </p>
           </article>
 
