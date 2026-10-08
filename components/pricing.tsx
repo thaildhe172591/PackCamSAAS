@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Download, MessageCircle, Send, Sparkles, Star } from "lucide-react";
-import { PLAN_CODE, telegramBuyLink } from "@/lib/telegram";
 import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
 import { Reveal, Spotlight, Stagger, StaggerItem } from "@/components/primitives";
 
@@ -46,6 +45,8 @@ type Plan = {
  *
  * Mọi thứ đang phát triển đều phải ghi rõ là lộ trình, không trộn vào danh sách tính năng.
  */
+// Telegram tạm ẩn khỏi bảng giá: nút mua mở widget liên hệ thay vì bot. Bật lại thì trả ba CTA
+// về `{ kind: "telegram", href: telegramBuyLink(PLAN_CODE.<gói>) }` (trial: không kèm payload).
 const plans: Plan[] = [
   {
     name: "Dùng thử",
@@ -54,10 +55,9 @@ const plans: Plan[] = [
     desc: "Chạy thử toàn bộ trên dữ liệu thật của shop.",
     desks: "2 bàn",
     isMostPop: false,
-    // Gói thử phải tải file trước rồi mới xin key, nên tải-về là nút chính. Và link Telegram
-    // ở đây KHÔNG mang payload: trial chỉ admin phát tay, bot không mở wizard cho nó.
+    // Gói thử phải tải file trước rồi mới xin key, nên tải-về là nút chính.
     primary: { label: `Tải PackCam về máy · ${LATEST_VERSION}`, kind: "download", href: DOWNLOAD_URL },
-    secondary: { label: "Xin key dùng thử qua Telegram", kind: "telegram", href: telegramBuyLink() },
+    secondary: { label: "Liên hệ xin key dùng thử", kind: "contact" },
     features: [
       "Mở đủ tính năng như gói Pro",
       "Không giới hạn số video",
@@ -73,11 +73,7 @@ const plans: Plan[] = [
     desc: "Mua một lần, dùng vĩnh viễn trên 1 máy.",
     desks: "2 bàn",
     isMostPop: false,
-    primary: {
-      label: "Mua qua Telegram",
-      kind: "telegram",
-      href: telegramBuyLink(PLAN_CODE.standard),
-    },
+    primary: { label: "Liên hệ mua gói Standard", kind: "contact" },
     secondary: { label: `Tải bản cài đặt · ${LATEST_VERSION}`, kind: "download", href: DOWNLOAD_URL },
     features: [
       "Quay bằng chứng, khắc mã vận đơn lên khung hình",
@@ -95,11 +91,7 @@ const plans: Plan[] = [
     desc: "Cho kho nhiều bàn, cần giám sát và đối soát.",
     desks: "8 bàn",
     isMostPop: true,
-    primary: {
-      label: "Mua qua Telegram",
-      kind: "telegram",
-      href: telegramBuyLink(PLAN_CODE.pro),
-    },
+    primary: { label: "Liên hệ mua gói Pro", kind: "contact" },
     secondary: { label: `Tải bản cài đặt · ${LATEST_VERSION}`, kind: "download", href: DOWNLOAD_URL },
     features: [
       "Camera IP / đầu ghi NVR, không chỉ webcam USB",
@@ -141,7 +133,7 @@ const plans: Plan[] = [
 const conversionCues = [
   "Standard mua một lần, dùng vĩnh viễn — không phí duy trì hằng tháng",
   "Dùng thử 7 ngày mở đủ tính năng, trên dữ liệu thật của shop",
-  "Chọn gói và nhận key ngay trong Telegram, không cần chờ tư vấn",
+  "Video lưu trên máy của kho, quay được cả khi mất mạng",
 ];
 
 const CTA_ICON = {
