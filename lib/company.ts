@@ -21,7 +21,7 @@ export const COMPANY = {
   cityEn: "Hanoi",
   country: "Việt Nam",
   countryEn: "Vietnam",
-  foundingDate: "2026-01",
+  foundingDate: "2026-07",
   founder: {
     name: "Thai Luu Danh",
     linkedin: "https://www.linkedin.com/in/luu-danh-thai-31ab55318/",

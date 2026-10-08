@@ -3,10 +3,19 @@ import Footer from "@/components/footer";
 import { Eyebrow } from "@/components/primitives";
 import { COMPANY } from "@/lib/company";
 
+// "2026-07" → "July 2026" / "07/2026". timeZone UTC: không có nó, máy build ở múi giờ âm sẽ đọc
+// ngày 1 thành cuối tháng trước.
+const [foundedYear, foundedMonth] = COMPANY.foundingDate.split("-");
+const foundedEn = `${new Date(`${COMPANY.foundingDate}-01T00:00:00Z`).toLocaleString("en-US", {
+  month: "long",
+  timeZone: "UTC",
+})} ${foundedYear}`;
+const foundedVi = `${foundedMonth}/${foundedYear}`;
+
 export const metadata: Metadata = {
   title: "About PackCam | Giới thiệu PackCam",
   description:
-    "PackCam is a software startup founded in January 2026 in Hanoi, Vietnam, building packing-video evidence tools for e-commerce sellers and fulfillment warehouses.",
+    `PackCam is a software startup founded in ${foundedEn} in Hanoi, Vietnam, building packing-video evidence tools for e-commerce sellers and fulfillment warehouses.`,
   alternates: { canonical: "/about" },
 };
 
@@ -18,7 +27,7 @@ export const metadata: Metadata = {
 
 const facts: { en: string; vi: string; value: string; href?: string }[] = [
   { en: "Company", vi: "Công ty", value: `${COMPANY.legalName} · ${COMPANY.legalNameEn}` },
-  { en: "Founded", vi: "Thành lập", value: "January 2026 · Tháng 01/2026" },
+  { en: "Founded", vi: "Thành lập", value: `${foundedEn} · Tháng ${foundedVi}` },
   {
     en: "Address",
     vi: "Địa chỉ",
@@ -51,7 +60,7 @@ export default function About() {
               computer and recording keeps working offline.
             </p>
             <p className="text-base leading-8 text-muted-foreground sm:text-lg">
-              PackCam was founded in January 2026 in {COMPANY.cityEn}, {COMPANY.countryEn},
+              PackCam was founded in {foundedEn} in {COMPANY.cityEn}, {COMPANY.countryEn},
               by {COMPANY.founder.name}. We are based at {COMPANY.streetEn}, {COMPANY.cityEn},{" "}
               {COMPANY.countryEn}. PackCam is developed by {COMPANY.legalNameEn} (
               {COMPANY.legalName}).
@@ -73,7 +82,7 @@ export default function About() {
               máy tính của kho và vẫn quay được khi mất mạng.
             </p>
             <p className="text-base leading-8 text-muted-foreground">
-              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái,
+              PackCam được thành lập vào tháng {foundedVi} tại {COMPANY.city} bởi Lưu Danh Thái,
               phát triển bởi {COMPANY.legalName}.
             </p>
           </article>
