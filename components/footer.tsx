@@ -37,7 +37,6 @@ const footerLinks = [
 
 const [foundedYear, foundedMonth] = COMPANY.foundingDate.split("-");
 const phoneDisplay = COMPANY.phone.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const companyInfo: { icon: LucideIcon; label: string; sub?: string; href?: string }[] = [
   {
@@ -86,13 +85,10 @@ const Footer = () => {
             </Link>
 
             <div className="space-y-1">
-              <p className="text-lg font-bold">{COMPANY.legalName}</p>
-              <p className={`text-sm ${muted}`}>{COMPANY.legalNameEn}</p>
-              {COMPANY.pendingVi && (
-                <p className="!mt-3 w-fit rounded-lg border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-medium text-[#ffb15c]">
-                  {capitalize(COMPANY.pendingVi)} · {capitalize(COMPANY.pendingEn)}
-                </p>
-              )}
+              <p className="text-lg font-bold">Phần mềm quay đóng gói và xử lý khiếu nại</p>
+              <p className={`text-sm ${muted}`}>
+                Packing-video evidence software for e-commerce and fulfillment
+              </p>
             </div>
 
             <ul className={`space-y-3 text-sm ${muted}`}>

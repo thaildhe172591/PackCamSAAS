@@ -16,13 +16,7 @@ export const metadata: Metadata = {
   doanh nghiệp, thứ có thể không chạy JS — nội dung phải thấy được ngay từ HTML server trả về.
 */
 
-const facts: { en: string; vi: string; value: string; note?: string; href?: string }[] = [
-  {
-    en: "Company",
-    vi: "Công ty",
-    value: `${COMPANY.legalName} · ${COMPANY.legalNameEn}`,
-    note: COMPANY.pendingVi && `${COMPANY.pendingVi} · ${COMPANY.pendingEn}`,
-  },
+const facts: { en: string; vi: string; value: string; href?: string }[] = [
   { en: "Founded", vi: "Thành lập", value: "January 2026 · Tháng 01/2026" },
   {
     en: "Address",
@@ -58,8 +52,7 @@ export default function About() {
             <p className="text-base leading-8 text-muted-foreground sm:text-lg">
               PackCam was founded in January 2026 in {COMPANY.cityEn}, {COMPANY.countryEn},
               by {COMPANY.founder.name}. We are based at {COMPANY.streetEn}, {COMPANY.cityEn},{" "}
-              {COMPANY.countryEn}. PackCam is developed by {COMPANY.legalNameEn} (
-              {COMPANY.legalName}){COMPANY.pendingEn && ` — ${COMPANY.pendingEn}`}.
+              {COMPANY.countryEn}.
             </p>
           </article>
 
@@ -78,9 +71,7 @@ export default function About() {
               máy tính của kho và vẫn quay được khi mất mạng.
             </p>
             <p className="text-base leading-8 text-muted-foreground">
-              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái,
-              phát triển bởi {COMPANY.legalName}
-              {COMPANY.pendingVi && ` (${COMPANY.pendingVi})`}.
+              PackCam được thành lập vào tháng 01/2026 tại {COMPANY.city} bởi Lưu Danh Thái.
             </p>
           </article>
 
@@ -101,11 +92,6 @@ export default function About() {
                     </a>
                   ) : (
                     fact.value
-                  )}
-                  {fact.note && (
-                    <span className="mt-1 block text-xs font-normal text-muted-foreground">
-                      {fact.note}
-                    </span>
                   )}
                 </dd>
               </div>
