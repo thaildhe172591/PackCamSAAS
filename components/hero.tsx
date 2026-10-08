@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Download, MonitorPlay, Send, ShieldCheck, WifiOff } from "lucide-react";
+import { ArrowRight, Download, MessageCircle, MonitorPlay, ShieldCheck, WifiOff } from "lucide-react";
 import { DOWNLOAD_URL, LATEST_VERSION } from "@/lib/download";
-import { telegramBuyLink } from "@/lib/telegram";
+import { openContactWidget } from "@/components/contact-widget";
 import { Eyebrow, Reveal, Stagger, StaggerItem } from "@/components/primitives";
 import Image from "next/image";
 import Link from "next/link";
@@ -96,11 +96,14 @@ export default function Hero() {
               </a>
             </Button>
 
-            <Button asChild variant="outline" size="lg" className="rounded-lg px-6">
-              <a href={telegramBuyLink()} target="_blank" rel="noreferrer">
-                Xin key dùng thử
-                <Send className="size-4" />
-              </a>
+            <Button
+              variant="outline"
+              size="lg"
+              className="rounded-lg px-6"
+              onClick={openContactWidget}
+            >
+              Xin key dùng thử
+              <MessageCircle className="size-4" />
             </Button>
 
             <Button asChild variant="ghost" size="lg" className="rounded-lg px-4">

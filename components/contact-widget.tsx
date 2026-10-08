@@ -4,15 +4,15 @@ import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUpRight,
+  Mail,
   MessageCircle,
   Phone,
   PhoneCall,
-  Send,
   X,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { telegramBuyLink } from "@/lib/telegram";
+import { COMPANY } from "@/lib/company";
 
 export const CONTACT_WIDGET_OPEN_EVENT = "packcam:open-contact-widget";
 
@@ -29,19 +29,17 @@ type ContactItem = {
 };
 
 /**
- * Telegram tách hẳn khỏi ba kênh còn lại vì nó khác vai trò, không phải khác thương hiệu:
- * bot tự phát key ngay trong chat, còn Fanpage/Zalo/điện thoại là người trả lời trong giờ làm.
- * Để cả bốn ngang hàng như trước thì khách không có lý do gì chọn cái nhanh nhất.
+ * Kênh bot Telegram (tự báo giá, phát key 24/7) đang tạm ẩn khỏi toàn site. Bật lại thì lấy khối
+ * `buyChannel` từ lịch sử git (commit trước "ẩn hết Telegram") — nó đứng riêng trên danh sách này.
  */
-const buyChannel: ContactItem = {
-  label: "Mua key qua Telegram",
-  value: "Bot tự báo giá và phát key, 24/7",
-  href: telegramBuyLink(),
-  icon: Send,
-  accentClass: "bg-primary text-white",
-};
-
 const supportChannels: ContactItem[] = [
+  {
+    label: "Email",
+    value: COMPANY.email,
+    href: `mailto:${COMPANY.email}`,
+    icon: Mail,
+    accentClass: "bg-primary text-white",
+  },
   {
     label: "Fanpage",
     value: "facebook.com/packcampage",
@@ -103,8 +101,7 @@ export default function ContactWidget() {
               <div>
                 <p className="text-sm font-bold">Mua key &amp; hỗ trợ PackCam</p>
                 <p className="mt-1 text-xs leading-5 text-[#6f635b]">
-                  Bot Telegram báo giá và phát key ngay. Ba kênh còn lại có người
-                  trả lời trong giờ làm việc.
+                  Đội PackCam báo giá, gửi key và hỗ trợ trong giờ làm việc.
                 </p>
               </div>
 
@@ -121,40 +118,6 @@ export default function ContactWidget() {
             </div>
 
             <div className="space-y-2 p-3">
-              <motion.a
-                href={buyChannel.href}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => setOpen(false)}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.18 }}
-                className="group flex items-center gap-3 rounded-xl border border-[#ffb15c] bg-[linear-gradient(135deg,#fff4e7_0%,#ffe8d2_100%)] px-3 py-3 shadow-[0_2px_10px_rgba(255,122,26,0.14)] transition-colors duration-200 hover:border-primary hover:bg-[#ffe8d2] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
-              >
-                <span
-                  className={`flex size-10 shrink-0 items-center justify-center rounded-full shadow-sm ${buyChannel.accentClass}`}
-                >
-                  <buyChannel.icon className="size-[18px]" />
-                </span>
-
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-bold leading-5">
-                    {buyChannel.label}
-                  </span>
-                  <span className="block truncate text-xs leading-5 text-[#8a6a4f]">
-                    {buyChannel.value}
-                  </span>
-                </span>
-
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/15 transition-colors group-hover:bg-primary/25">
-                  <ArrowUpRight className="size-3.5" />
-                </span>
-              </motion.a>
-
-              <p className="px-1 pt-1 text-[11px] font-semibold uppercase tracking-wider text-[#9b8d84]">
-                Hoặc hỏi trực tiếp
-              </p>
-
               {supportChannels.map((contact, index) => {
                 const Icon = contact.icon;
 

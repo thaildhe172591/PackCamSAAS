@@ -8,9 +8,9 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { openContactWidget } from "@/components/contact-widget";
-import { MessageCircle, Send } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 import { Reveal, SectionHeading } from "@/components/primitives";
-import { telegramBuyLink } from "@/lib/telegram";
+import { COMPANY } from "@/lib/company";
 
 const accordionItems = [
   {
@@ -31,7 +31,7 @@ const accordionItems = [
   {
     title: "Mua và nhận key như thế nào?",
     content:
-      "Chọn gói ngay trong bot Telegram: bot báo giá, hướng dẫn thanh toán và phát key tự động, không cần chờ tư vấn viên. Riêng key dùng thử 7 ngày và gói Enterprise do đội ngũ phát tay sau khi trao đổi.",
+      "Liên hệ PackCam qua email, điện thoại hoặc Fanpage: đội ngũ báo giá, hướng dẫn thanh toán và gửi key cho bạn. Key dùng thử 7 ngày và gói Enterprise cũng được phát sau khi trao đổi.",
   },
   {
     title: "Dùng thử có bị giới hạn tính năng không?",
@@ -67,14 +67,13 @@ export default function Faq() {
           >
             <h3 className="text-base font-bold text-foreground">Chưa thấy câu bạn cần?</h3>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              Nhắn thẳng cho đội PackCam — bot trả lời giá và phát key 24/7, người
-              hỗ trợ trả lời trong giờ làm việc.
+              Nhắn thẳng cho đội PackCam — người hỗ trợ trả lời trong giờ làm việc.
             </p>
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
               <Button asChild size="sm" className="packcam-cta-shimmer rounded-lg">
-                <a href={telegramBuyLink()} target="_blank" rel="noreferrer">
-                  Hỏi qua Telegram
-                  <Send className="size-4" />
+                <a href={`mailto:${COMPANY.email}`}>
+                  Gửi email
+                  <Mail className="size-4" />
                 </a>
               </Button>
               <Button

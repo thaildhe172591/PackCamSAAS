@@ -22,7 +22,7 @@ import Link from "next/link";
   Không bọc framer-motion như các section khác: motion render sẵn `opacity: 0` vào HTML, mà khối
   thông tin doanh nghiệp ở đây là thứ bot xác minh cần đọc được khi không chạy JS.
 
-  Zalo và Telegram tạm ẩn khỏi footer và bảng giá; nút chat nổi vẫn dùng hai kênh này.
+  Telegram tạm ẩn khỏi toàn site; Zalo tạm ẩn khỏi footer (nút chat nổi vẫn có).
 */
 
 const footerLinks = [
